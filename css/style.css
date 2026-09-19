@@ -60,7 +60,7 @@ body{
 }
 
 .capa-painel{
-    position: sticky;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -210,7 +210,7 @@ main{
 }
 
 .secao-historia{
-    padding: 120px 0;
+    padding: 96px 0 56px;
     text-align: center;
 }
 
@@ -230,7 +230,7 @@ main{
     font-weight: 700;
     text-transform: uppercase;
     color: #ff6a6a;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
 }
 
 .historia-texto{
@@ -242,46 +242,6 @@ main{
     font-size: 20px;
     line-height: 1.7;
     color: #c4c0d8;
-}
-
-.secao-video{
-    padding: 100px 0;
-}
-
-.card-video-container{
-    aspect-ratio: 16 / 9;
-    width: 100%;
-    border-radius: 24px;
-    overflow: hidden;
-     background:
-    linear-gradient(to top, rgba(13, 13, 26, 0.9), transparent 70%),
-    url('../assets/card-trailer.png') center / cover no-repeat;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: flex-end;
-    text-align: right;
-    padding: 40px;
-}
-
-.card-video-titulo{
-    font-family: 'Oswald', sans-serif;
-    font-size: 48px;
-    font-weight: 700;
-    text-transform: uppercase;
-    color: #f3e4c4;
-    margin-bottom: 8px;
-}
-
-.card-video-descricao{
-    font-size: 18px;
-    max-width: 420px;
-    margin-bottom: 24px;
-}
-
-.card-video-botao img{
-    width: 18px;
-    height: 18px;
 }
 
 .rodape{
@@ -373,11 +333,6 @@ main{
     .lista-plataformas{
         justify-content: center;
     }
-
-    .card-video-container{
-        aspect-ratio: 4/5;
-        background-position: 30% center;
-    }
 }
 
 .aparecer{
@@ -389,4 +344,1491 @@ main{
 .aparecer.visivel{
     opacity: 1;
     transform: translateY(0);
+}
+/* ==========================================================================
+   EXPANSÃO — variáveis de apoio (mesma paleta já usada no site)
+   ========================================================================== */
+:root{
+    --cor-fundo: #0d0d1a;
+    --cor-fundo-alt: #14142a;
+    --cor-magenta: #ff3d8b;
+    --cor-roxo: #8a4dff;
+    --cor-ciano: #35e6e6;
+    --cor-texto: #ffffff;
+    --cor-texto-suave: #c4c0d8;
+    --cor-texto-fraco: #6e6e85;
+}
+
+.secao-titulo{
+    font-family: 'Oswald', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--cor-texto);
+    margin-bottom: 8px;
+}
+
+.botao-secundario{
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255,255,255,0.4);
+}
+
+.botao-secundario:hover{
+    border-color: var(--cor-magenta);
+    box-shadow: 0 0 20px rgba(255,61,139,0.35);
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   MENU — botão hambúrguer + overlay fullscreen
+   ========================================================================== */
+.menu-conteudo{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu-botao{
+    width: 32px;
+    height: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0;
+}
+
+.menu-botao span{
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.menu-botao[aria-expanded="true"] span:first-child{
+    transform: translateY(9px) rotate(45deg);
+}
+
+.menu-botao[aria-expanded="true"] span:last-child{
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+.menu-overlay{
+    position: fixed;
+    inset: 0;
+    background-color: rgba(13,13,26,0.98);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-16px);
+    transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+}
+
+.menu-overlay.aberto{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.menu-overlay-conteudo{
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    text-align: center;
+}
+
+.menu-overlay-link{
+    font-family: 'Oswald', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-decoration: none;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 16px;
+    transition: color 0.25s ease, letter-spacing 0.25s ease;
+}
+
+.menu-overlay-numero{
+    font-size: 15px;
+    color: var(--cor-magenta);
+    font-weight: 400;
+}
+
+.menu-overlay-link:hover{
+    color: var(--cor-magenta);
+    letter-spacing: 1px;
+}
+
+@media (max-width: 700px){
+    .menu-overlay-link{
+        font-size: 22px;
+    }
+}
+
+/* ==========================================================================
+   JASON & LUCIA
+   ========================================================================== */
+.secao-jason-lucia{
+    padding: 48px 0 60px;
+    background-color: var(--cor-fundo);
+}
+
+.secao-jason-lucia .conteudo-central{
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.jl-grid{
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 4px;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 4px;
+}
+
+.jl-painel{
+    position: relative;
+    /* proporção real das fotos (1163×1352) — sem forçar altura fixa, o
+       object-fit:cover deixa de precisar cortar cabeça/corpo */
+    aspect-ratio: 1163 / 1352;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.jl-painel-lucia{
+    margin-top: 40px;
+}
+
+.jl-imagem{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1);
+    transition: transform 0.6s ease, filter 0.6s ease;
+    filter: saturate(0.95) brightness(0.88);
+}
+
+.jl-imagem-jason{
+    object-position: 50% 15%;
+}
+
+.jl-imagem-lucia{
+    object-position: 50% 12%;
+}
+
+.jl-painel::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* degradê mais forte/gradual: cobre bem o texto e disfarça qualquer
+       borda de corte da foto, sem escurecer a imagem inteira */
+    background: linear-gradient(
+        to top,
+        rgba(13,13,26,0.98) 0%,
+        rgba(13,13,26,0.85) 14%,
+        rgba(13,13,26,0.45) 32%,
+        transparent 60%
+    );
+    pointer-events: none;
+}
+
+.jl-painel:hover .jl-imagem,
+.jl-painel:focus .jl-imagem{
+    transform: scale(1.08);
+    filter: saturate(1.1) brightness(1);
+}
+
+.jl-info{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 32px;
+    z-index: 2;
+}
+
+.jl-numero{
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--cor-magenta);
+    margin-bottom: 8px;
+}
+
+.jl-nome{
+    font-family: 'Oswald', sans-serif;
+    font-size: 34px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    transition: transform 0.4s ease;
+}
+
+.jl-painel:hover .jl-nome,
+.jl-painel:focus .jl-nome{
+    transform: translateX(4px);
+}
+
+.jl-texto{
+    max-width: 380px;
+    color: var(--cor-texto-suave);
+    font-size: 15px;
+    opacity: 0.85;
+    transition: opacity 0.4s ease;
+}
+
+@media (max-width: 800px){
+    .jl-grid{
+        grid-template-columns: 1fr;
+        max-width: 420px;
+    }
+
+    .jl-painel-lucia{
+        margin-top: 4px;
+    }
+}
+
+/* ==========================================================================
+   LEONIDA — mapa + regiões
+   ========================================================================== */
+.secao-leonida{
+    background-color: var(--cor-fundo-alt);
+    padding: 110px 0 0;
+}
+
+.leonida-intro{
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.secao-titulo-leonida{
+    font-size: 64px;
+    background: linear-gradient(90deg, var(--cor-magenta), var(--cor-roxo));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.leonida-subtitulo{
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--cor-texto-suave);
+    margin-bottom: 16px;
+}
+
+.leonida-texto{
+    max-width: 640px;
+    margin: 0 auto;
+    color: var(--cor-texto-suave);
+}
+
+.leonida-mapa-wrap{
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px 40px;
+    display: grid;
+    grid-template-columns: 1fr 0.85fr;
+    gap: 56px;
+    align-items: center;
+}
+
+.leonida-mapa-coluna{
+    position: relative;
+}
+
+/* brilho suave atras do mapa, para ele nao parecer uma imagem "colada" */
+.leonida-mapa-coluna::before{
+    content: "";
+    position: absolute;
+    inset: 8% 10%;
+    background: radial-gradient(circle at 60% 45%, rgba(255,61,139,0.22), transparent 70%);
+    filter: blur(40px);
+    pointer-events: none;
+}
+
+/* O arquivo ja tem fundo transparente (PNG), entao nao e preciso
+   mix-blend-mode: ele se integra ao fundo da secao naturalmente e sem
+   depender de stacking context. */
+.leonida-mapa-imagem{
+    position: relative;
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: saturate(1.1) contrast(1.05)
+        drop-shadow(0 0 22px rgba(255,61,139,0.25));
+}
+
+.leonida-coluna-info{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.leonida-info{
+    /* altura minima fixa: evita que a troca de regiao empurre a navegacao */
+    min-height: 148px;
+    text-align: left;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.leonida-info.trocando{
+    opacity: 0;
+    transform: translateY(8px);
+}
+
+.leonida-info-numero{
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--cor-ciano);
+    margin-bottom: 8px;
+}
+
+.leonida-info-nome{
+    font-family: 'Oswald', sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.05;
+    margin-bottom: 12px;
+}
+
+.leonida-info-texto{
+    color: var(--cor-texto-suave);
+    font-size: 16px;
+    max-width: 420px;
+}
+
+.leonida-regioes{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.leonida-regiao-botao{
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    width: 100%;
+    text-align: left;
+    background-color: transparent;
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 16px 8px;
+    cursor: pointer;
+    color: var(--cor-texto-suave);
+    transition: color 0.25s ease, background-color 0.25s ease, padding-left 0.25s ease;
+}
+
+.leonida-regiao-botao:last-child{
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.leonida-regiao-numero{
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--cor-texto-fraco);
+    transition: color 0.25s ease;
+}
+
+.leonida-regiao-texto{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.leonida-regiao-nome{
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: inherit;
+}
+
+.leonida-regiao-resumo{
+    font-size: 13px;
+    color: var(--cor-texto-fraco);
+}
+
+.leonida-regiao-botao:hover,
+.leonida-regiao-botao:focus-visible{
+    color: #ffffff;
+    background-color: rgba(255,255,255,0.03);
+    padding-left: 16px;
+}
+
+.leonida-regiao-botao.ativo{
+    color: #ffffff;
+    background-color: rgba(255,61,139,0.08);
+    box-shadow: inset 2px 0 0 var(--cor-magenta);
+    padding-left: 16px;
+}
+
+.leonida-regiao-botao.ativo .leonida-regiao-numero{
+    color: var(--cor-magenta);
+}
+
+@media (max-width: 900px){
+    .leonida-mapa-wrap{
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 0 24px 40px;
+    }
+
+    /* o mapa tem linhas de neon muito finas: ao ser reduzido para a largura
+       do celular elas perdem intensidade no downscale */
+    .leonida-mapa-imagem{
+        filter: saturate(1.2) contrast(1.12) brightness(1.15)
+            drop-shadow(0 0 16px rgba(255,61,139,0.25));
+    }
+
+    .leonida-info{
+        min-height: 0;
+    }
+
+    .leonida-info-nome{
+        font-size: 30px;
+    }
+}
+
+/* UM MUNDO VIVO */
+.mundo-vivo{
+    padding: 60px 0 100px;
+}
+
+.mundo-vivo .conteudo-central{
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.mundo-vivo-cards{
+    display: flex;
+    gap: 6px;
+    padding: 0 24px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.card-mundo{
+    position: relative;
+    flex: 1;
+    height: 62vh;
+    min-height: 380px;
+    overflow: hidden;
+    transition: flex 0.5s ease;
+}
+
+.mundo-vivo-cards:hover .card-mundo:not(:hover){
+    flex: 0.72;
+}
+
+.mundo-vivo-cards:hover .card-mundo:hover{
+    flex: 1.6;
+}
+
+.card-mundo-imagem{
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.02);
+    transition: transform 0.6s ease, filter 0.6s ease;
+    filter: brightness(0.78) saturate(1.05);
+}
+
+.card-mundo:hover .card-mundo-imagem{
+    transform: scale(1.12);
+    filter: brightness(0.95) saturate(1.1);
+}
+
+.card-mundo::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(13,13,26,0.9), transparent 60%);
+}
+
+.card-mundo-info{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 24px 18px;
+    z-index: 2;
+}
+
+.card-mundo-indicador{
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: var(--cor-magenta);
+    margin-bottom: 10px;
+    transition: width 0.4s ease;
+}
+
+.card-mundo:hover .card-mundo-indicador{
+    width: 48px;
+}
+
+.card-mundo-info h3{
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+/* O texto ja ocupa seu espaco final desde o inicio (altura reservada), entao
+   o hover anima SOMENTE opacity/transform. Sem max-height e sem mudanca de
+   layout, o texto nao recalcula posicao nem "pula" durante a expansao. */
+.card-mundo-info p{
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--cor-texto-suave);
+    min-height: 2.8em;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.card-mundo:hover .card-mundo-info p,
+.card-mundo:focus-within .card-mundo-info p{
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 800px){
+    .mundo-vivo-cards{
+        flex-direction: column;
+        padding: 0 24px;
+    }
+
+    .card-mundo{
+        height: 200px;
+    }
+
+    .mundo-vivo-cards:hover .card-mundo:not(:hover){
+        flex: 1;
+    }
+
+    .mundo-vivo-cards:hover .card-mundo:hover{
+        flex: 1;
+    }
+
+    .card-mundo-info p{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   TRAILERS
+   ========================================================================== */
+.secao-trailers{
+    padding: 100px 0 60px;
+    background-color: var(--cor-fundo);
+    text-align: center;
+}
+
+.trailers-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 40px;
+    text-align: left;
+}
+
+.card-trailer{
+    position: relative;
+    aspect-ratio: 16/10;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #1a1a30;
+}
+
+.card-trailer-imagem{
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transform: scale(1);
+    transition: transform 0.5s ease;
+}
+
+.card-trailer:hover .card-trailer-imagem{
+    transform: scale(1.06);
+}
+
+.card-trailer::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(13,13,26,0.92), transparent 55%);
+}
+
+.card-trailer-play{
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: rgba(255,61,139,0.85);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+    opacity: 0.85;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.card-trailer-play img{
+    width: 16px;
+    height: 16px;
+}
+
+.card-trailer:hover .card-trailer-play{
+    transform: scale(1.12);
+    opacity: 1;
+}
+
+.card-trailer-conteudo{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 18px;
+    z-index: 2;
+}
+
+.card-trailer-titulo{
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+.card-trailer-meta{
+    font-size: 13px;
+    color: var(--cor-texto-suave);
+}
+
+.trailers-proximo{
+    margin-top: 32px;
+    color: var(--cor-texto-fraco);
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.trailers-proximo span{
+    color: var(--cor-magenta);
+}
+
+@media (max-width: 800px){
+    .trailers-grid{
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Modal de vídeo reutilizável */
+.video-modal{
+    position: fixed;
+    inset: 0;
+    background-color: rgba(5,5,12,0.95);
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s;
+    padding: 24px;
+}
+
+.video-modal.aberto{
+    opacity: 1;
+    visibility: visible;
+}
+
+.video-modal-conteudo{
+    width: 100%;
+    max-width: 960px;
+}
+
+.video-modal-player{
+    width: 100%;
+    max-height: 80vh;
+    border-radius: 8px;
+    display: none;
+    background-color: #000;
+}
+
+.video-modal-player.ativo{
+    display: block;
+}
+
+.video-modal-indisponivel{
+    text-align: center;
+    color: var(--cor-texto-suave);
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 80px 20px;
+    border: 1px dashed rgba(255,255,255,0.2);
+    border-radius: 8px;
+    display: none;
+}
+
+.video-modal-indisponivel.ativo{
+    display: block;
+}
+
+.video-modal-fechar{
+    position: fixed;
+    top: 24px;
+    right: 32px;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 32px;
+    cursor: pointer;
+    z-index: 1201;
+}
+
+/* ==========================================================================
+   GALERIA
+   ========================================================================== */
+.secao-galeria{
+    position: relative;
+    padding: 100px 0;
+    background-color: var(--cor-fundo-alt);
+    text-align: center;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/* Camada de fundo que recebe a imagem em hover (via --galeria-imagem).
+   Fica atras do conteudo e so aparece quando a secao tem a classe "ativa". */
+.galeria-fundo{
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0;
+    background-image: var(--galeria-imagem, none);
+    background-size: cover;
+    background-position: center;
+    filter: blur(20px) saturate(1.3) brightness(0.85);
+    transform: scale(1.04);
+    transition: opacity 0.5s ease, transform 1.2s ease;
+    pointer-events: none;
+}
+
+/* camada escura para manter os textos legíveis — só isso, sem blobs de cor
+   por cima da foto (era o "borrão rosa" que escondia a imagem real) */
+.galeria-fundo::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(13,13,26,0.6), rgba(13,13,26,0.85));
+}
+
+/* so em dispositivos com cursor real; no toque a galeria segue normal */
+@media (hover: hover) and (pointer: fine){
+    .secao-galeria.galeria-ativa .galeria-fundo{
+        opacity: 0.85;
+        /* leve zoom continuo enquanto a imagem esta ativa, para dar a
+           sensacao cinematografica pedida */
+        transform: scale(1.12);
+    }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .galeria-fundo{
+        transition: none;
+    }
+}
+
+.secao-galeria .conteudo-central,
+.galeria-grade{
+    position: relative;
+    z-index: 1;
+}
+
+.galeria-texto{
+    color: var(--cor-texto-suave);
+}
+
+.galeria-grade{
+    max-width: 1200px;
+    margin: 56px auto 0;
+    padding: 0 32px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(2, 180px);
+    gap: 14px;
+}
+
+.galeria-item{
+    position: relative;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.35s ease, z-index 0s;
+}
+
+.galeria-item-imagem{
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease, filter 0.5s ease;
+    filter: saturate(0.85) brightness(0.85);
+}
+
+.galeria-item-1{ grid-column: span 2; grid-row: span 2; transform: rotate(-1deg); }
+.galeria-item-2{ grid-column: span 2; grid-row: span 1; transform: rotate(1deg); }
+.galeria-item-3{ grid-column: span 2; grid-row: span 1; transform: rotate(-0.6deg); }
+.galeria-item-4{ grid-column: span 2; grid-row: span 1; transform: rotate(0.8deg); }
+.galeria-item-5{ grid-column: span 1; grid-row: span 1; transform: rotate(-1.2deg); }
+.galeria-item-6{ grid-column: span 1; grid-row: span 1; transform: rotate(1.4deg); }
+
+.galeria-item:hover{
+    transform: scale(1.04) rotate(0deg) !important;
+    z-index: 2;
+}
+
+.galeria-item:hover .galeria-item-imagem{
+    transform: scale(1.1);
+    filter: saturate(1) brightness(1);
+}
+
+@media (max-width: 800px){
+    .galeria-grade{
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(6, 160px);
+    }
+
+    .galeria-item-1, .galeria-item-2, .galeria-item-3,
+    .galeria-item-4, .galeria-item-5, .galeria-item-6{
+        grid-column: span 1;
+        grid-row: span 1;
+        transform: none;
+    }
+}
+
+.galeria-lightbox{
+    position: fixed;
+    inset: 0;
+    background-color: rgba(5,5,12,0.95);
+    z-index: 1200;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s;
+    padding: 24px;
+}
+
+.galeria-lightbox.aberto{
+    opacity: 1;
+    visibility: visible;
+}
+
+.galeria-lightbox-imagem{
+    width: 100%;
+    max-width: 780px;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 10px;
+    background-color: #14142a;
+}
+
+.galeria-lightbox-legenda{
+    color: var(--cor-texto-suave);
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.galeria-lightbox-fechar{
+    position: fixed;
+    top: 24px;
+    right: 32px;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 32px;
+    cursor: pointer;
+    z-index: 1201;
+}
+
+/* ==========================================================================
+   THE SOUND OF VICE CITY
+   ========================================================================== */
+.secao-sound{
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 100px 0 180px;
+    background-color: var(--cor-fundo);
+}
+
+.sound-grid{
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 56px;
+    align-items: center;
+}
+
+.sound-texto{
+    color: var(--cor-texto-suave);
+    max-width: 420px;
+}
+
+.sound-player{
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    min-width: 0;
+}
+
+.sound-vinil-wrap{
+    position: relative;
+    width: 260px;
+    height: 170px;
+    flex-shrink: 0;
+}
+
+/* capa quadrada (proporção padrão de álbum); o vinil aparece por tras,
+   saindo pela direita */
+.sound-capa{
+    position: absolute;
+    top: 5px;
+    left: 0;
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+    z-index: 2;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+}
+
+.sound-vinil{
+    position: absolute;
+    top: 15px;
+    left: 120px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at center, #0d0d1a 0 8px, transparent 9px),
+        repeating-radial-gradient(circle at center, #1c1c2e 0, #1c1c2e 2px, #0f0f1c 3px, #0f0f1c 4px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+    z-index: 1;
+    animation: girar-vinil 6s linear infinite paused;
+}
+
+.sound-vinil.tocando{
+    animation-play-state: running;
+}
+
+@keyframes girar-vinil{
+    to{ transform: rotate(360deg); }
+}
+
+.sound-lista{
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sound-faixa{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    min-width: 0;
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 14px 8px;
+    color: var(--cor-texto-suave);
+    cursor: pointer;
+    text-align: left;
+    transition: color 0.25s ease, background-color 0.25s ease;
+}
+
+.sound-faixa:hover,
+.sound-faixa.ativa{
+    color: #ffffff;
+    background-color: rgba(255,255,255,0.04);
+}
+
+.sound-faixa-play{
+    color: var(--cor-magenta);
+    font-size: 11px;
+    width: 12px;
+    flex-shrink: 0;
+}
+
+.sound-faixa-texto{
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.sound-faixa-nome{
+    font-size: 14px;
+    color: inherit;
+    min-width: 0;
+}
+
+.sound-faixa-artista{
+    font-size: 12px;
+    color: var(--cor-texto-fraco);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+.sound-faixa-duracao{
+    font-size: 13px;
+    color: var(--cor-texto-fraco);
+    flex-shrink: 0;
+}
+
+/* barra de progresso da faixa em reprodução */
+.sound-barra{
+    height: 3px;
+    margin-top: 16px;
+    background-color: rgba(255,255,255,0.08);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.sound-barra-progresso{
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--cor-roxo), var(--cor-magenta));
+    transition: width 0.2s linear;
+}
+
+/* Onda sonora ambiente — ocupa a base de toda a seção, "nascendo" da
+   divisória entre Sound e Edições. Quase invisível parada; ganha vida com
+   uma animação orgânica em CSS (cada barra com timing próprio) quando uma
+   faixa está tocando. Deliberadamente NÃO usa Web Audio API/AnalyserNode:
+   isso exigiria createMediaElementSource() no <audio>, que reroteia a saída
+   de som do elemento inteira por um AudioContext — se o navegador mantiver
+   esse contexto suspenso (política de autoplay), a música toca "por dentro"
+   mas fica muda. Não vale o risco por um efeito decorativo. */
+.sound-onda{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    height: 200px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 3px;
+    padding: 0 4px;
+    pointer-events: none;
+    opacity: 0.05;
+    transition: opacity 0.6s ease;
+}
+
+.sound-onda.tocando{
+    opacity: 1;
+}
+
+.sound-onda span{
+    flex: 1 1 0;
+    min-width: 2px;
+    max-width: 14px;
+    height: var(--max, 40%);
+    border-radius: 3px 3px 0 0;
+    background: linear-gradient(
+        to top,
+        var(--cor-roxo) 0%,
+        var(--cor-roxo) 60%,
+        var(--cor-magenta) 100%
+    );
+    transform-origin: bottom center;
+    transition: height 0.15s ease-out;
+    animation: onda-organica var(--dur, 2.4s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+    animation-play-state: paused;
+}
+
+.sound-onda.tocando span{
+    animation-play-state: running;
+}
+
+@keyframes onda-organica{
+    0%, 100%{ height: 8%; }
+    50%{ height: var(--max, 40%); }
+}
+
+@media (max-width: 800px){
+    .sound-onda{
+        height: 120px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .sound-onda span{
+        animation: none !important;
+        transition: none;
+    }
+}
+
+@media (max-width: 800px){
+    .sound-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .sound-player{
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+/* ==========================================================================
+   EDIÇÕES
+   ========================================================================== */
+.secao-edicoes{
+    padding: 100px 0;
+    background-color: var(--cor-fundo-alt);
+    text-align: center;
+}
+
+.edicoes-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+    text-align: left;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 32px;
+}
+
+.card-edicao{
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #12122a;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: transform 0.4s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.card-edicao:hover{
+    transform: translateY(-4px);
+    /* borda nítida + halo neon controlado — sem drop-shadow difuso */
+    border-color: var(--cor-roxo);
+    box-shadow:
+        0 0 0 1px var(--cor-roxo),
+        0 0 22px 2px rgba(138,77,255,0.45),
+        0 0 46px 10px rgba(138,77,255,0.18);
+}
+
+/* a arte da capa fica no topo, inteira e legivel; o texto vem abaixo
+   num bloco solido, para nunca competir com a ilustracao */
+.card-edicao-imagem{
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center top;
+    background-color: #1a1233;
+    transition: transform 0.5s ease;
+}
+
+.card-edicao:hover .card-edicao-imagem{
+    transform: scale(1.04);
+}
+
+.card-edicao-conteudo{
+    position: relative;
+    z-index: 2;
+    padding: 28px 32px 32px;
+    /* fundo 100% sólido (mesmo tom escuro usado no resto do site) — sem
+       gradiente translúcido, então a imagem nunca atravessa o texto */
+    background-color: var(--cor-fundo-alt);
+    border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.card-edicao-conteudo h3{
+    font-family: 'Oswald', sans-serif;
+    font-size: 28px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+.card-edicao-conteudo p{
+    color: var(--cor-texto-suave);
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.card-edicao-detalhe{
+    color: var(--cor-texto-fraco) !important;
+    font-size: 13px !important;
+    margin-bottom: 20px !important;
+}
+
+@media (max-width: 800px){
+    .edicoes-grid{
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================================
+   COUNTDOWN
+   ========================================================================== */
+.secao-countdown{
+    padding: 130px 0;
+    background:
+        linear-gradient(rgba(13,13,26,0.85), rgba(13,13,26,0.95)),
+        radial-gradient(circle at 50% 30%, rgba(255,61,139,0.15), transparent 60%);
+    text-align: center;
+}
+
+.countdown-titulo{
+    font-family: 'Oswald', sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+}
+
+.countdown-data{
+    color: var(--cor-texto-suave);
+    margin-bottom: 40px;
+}
+
+.countdown-numeros{
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+}
+
+.countdown-bloco{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+    padding: 16px 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    background-color: rgba(255,255,255,0.02);
+}
+
+.countdown-valor{
+    font-family: 'Oswald', sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--cor-magenta);
+    text-shadow: 0 0 20px rgba(255,61,139,0.4);
+}
+
+.countdown-rotulo{
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--cor-texto-fraco);
+    margin-top: 6px;
+}
+
+.countdown-mensagem{
+    margin-top: 32px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--cor-ciano);
+}
+
+@media (max-width: 700px){
+    .countdown-numeros{
+        gap: 12px;
+    }
+
+    .countdown-bloco{
+        min-width: 64px;
+        padding: 12px 8px;
+    }
+
+    .countdown-valor{
+        font-size: 28px;
+    }
+}
+
+/* ==========================================================================
+   DIVISÓRIAS DE SEÇÃO — elementos de direção de arte
+   Apenas 4 pontos estratégicos do site usam estas divisórias animadas.
+   Todas são puramente decorativas (aria-hidden) e animam só transform/opacity.
+   ========================================================================== */
+.divisoria{
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    height: 1px;
+    /* evita qualquer chance de gerar scroll horizontal */
+    overflow: hidden;
+    background-color: rgba(255,255,255,0.07);
+}
+
+/* 1. HISTÓRIA -> JASON & LUCIA: feixe luminoso magenta atravessando */
+.divisoria-feixe::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 22%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, var(--cor-magenta), transparent);
+    box-shadow: 0 0 12px rgba(255,61,139,0.7);
+    animation: divisoria-feixe 4.5s ease-in-out infinite;
+}
+
+@keyframes divisoria-feixe{
+    0%{ transform: translateX(-120%); opacity: 0; }
+    15%{ opacity: 1; }
+    85%{ opacity: 1; }
+    100%{ transform: translateX(560%); opacity: 0; }
+}
+
+/* 2. LEONIDA -> UM MUNDO VIVO: pequenos pontos correndo pela linha */
+.divisoria-particulas{
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(138,77,255,0.25) 30%,
+        rgba(53,230,230,0.25) 70%,
+        transparent);
+}
+
+.divisoria-particulas::before,
+.divisoria-particulas::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 4px;
+    height: 4px;
+    margin-top: -2px;
+    border-radius: 50%;
+    background-color: var(--cor-ciano);
+    box-shadow: 0 0 10px rgba(53,230,230,0.9);
+    animation: divisoria-particula 5.5s linear infinite;
+}
+
+.divisoria-particulas::after{
+    background-color: var(--cor-magenta);
+    box-shadow: 0 0 10px rgba(255,61,139,0.9);
+    animation-delay: 2.4s;
+}
+
+@keyframes divisoria-particula{
+    0%{ transform: translateX(0); opacity: 0; }
+    10%{ opacity: 1; }
+    90%{ opacity: 1; }
+    100%{ transform: translateX(100vw); opacity: 0; }
+}
+
+/* 3. GALERIA -> SOUND: divisória inspirada em waveform, com pulso atravessando */
+.divisoria-waveform{
+    height: 18px;
+    background-color: transparent;
+    background-image: repeating-linear-gradient(90deg,
+        rgba(138,77,255,0.35) 0 2px,
+        transparent 2px 8px);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent);
+}
+
+.divisoria-waveform::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 18%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,61,139,0.55), transparent);
+    animation: divisoria-feixe 6s ease-in-out infinite;
+}
+
+/* 4. ANTES DAS EDIÇÕES: linha magenta minimalista, sem animação */
+.divisoria-simples{
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(255,61,139,0.45) 50%,
+        transparent);
+}
+
+@media (prefers-reduced-motion: reduce){
+    .divisoria-feixe::after,
+    .divisoria-particulas::before,
+    .divisoria-particulas::after,
+    .divisoria-waveform::after{
+        animation: none;
+        opacity: 0.5;
+    }
+}
+
+/* ==========================================================================
+   AJUSTES FINAIS — trailers com link externo e faixa em reprodução
+   ========================================================================== */
+
+/* o terceiro card abre o YouTube: mesmo visual do botao de play */
+.card-trailer-link{
+    text-decoration: none;
+}
+
+/* faixa tocando: play vira "pausa" visualmente e ganha destaque */
+.sound-faixa.tocando .sound-faixa-play{
+    color: var(--cor-ciano);
+}
+
+.sound-faixa.tocando .sound-faixa-nome{
+    color: #ffffff;
+    font-weight: 600;
 }

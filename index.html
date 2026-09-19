@@ -21,8 +21,48 @@
       <div class="menu-conteudo">
         <!-- link clicável -->
         <a href="#" class="menu-logo">VI</a>
+
+        <button
+          class="menu-botao"
+          id="menu-botao"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+          aria-controls="menu-overlay"
+        >
+          <span></span><span></span>
+        </button>
       </div>
     </nav>
+
+    <!-- Overlay fullscreen com os links do menu -->
+    <div class="menu-overlay" id="menu-overlay">
+      <nav class="menu-overlay-conteudo">
+        <a href="#historia" class="menu-overlay-link"
+          ><span class="menu-overlay-numero">01</span>História</a
+        >
+        <a href="#jason-lucia" class="menu-overlay-link"
+          ><span class="menu-overlay-numero">02</span>Jason &amp; Lucia</a
+        >
+        <a href="#leonida" class="menu-overlay-link"
+          ><span class="menu-overlay-numero">03</span>Leonida</a
+        >
+        <a href="#trailers" class="menu-overlay-link"
+          ><span class="menu-overlay-numero">04</span>Trailers</a
+        >
+        <a href="#galeria" class="menu-overlay-link"
+          ><span class="menu-overlay-numero">05</span>Galeria</a
+        >
+        <a href="#sound" class="menu-overlay-link"
+          ><span class="menu-overlay-numero">06</span>Sound of Vice City</a
+        >
+        <a href="#edicoes" class="menu-overlay-link"
+          ><span class="menu-overlay-numero">07</span>Edições</a
+        >
+        <a href="#lancamento" class="menu-overlay-link"
+          ><span class="menu-overlay-numero">08</span>Lançamento</a
+        >
+      </nav>
+    </div>
 
     <header class="capa">
       <div class="capa-painel">
@@ -51,7 +91,7 @@
               <p class="capa-data">19 de Novembro de 2026</p>
             </div>
 
-            <a href="#" class="botao botao-primario">Reserve agora</a>
+            <a href="#edicoes" class="botao botao-primario">Reserve agora</a>
 
             <div class="capa-plataformas">
               <p class="capa-rotulo">Disponível em</p>
@@ -75,7 +115,7 @@
     </header>
 
     <main>
-      <section class="secao-historia">
+      <section class="secao-historia" id="historia">
         <div class="conteudo-central aparecer">
           <p class="rotulo">História</p>
           <h2 class="historia-titulo">Vice City, EUA.</h2>
@@ -92,24 +132,613 @@
         </div>
       </section>
 
-      <section class="secao-video">
+      <!-- JASON & LUCIA -->
+      <section class="secao-jason-lucia" id="jason-lucia">
         <div class="conteudo-central aparecer">
-          <article>
-            <div class="card-video-container">
-              <p class="rotulo">Vídeos</p>
-              <h2 class="card-video-titulo">2&ordm; Trailer</h2>
-              <p class="card-video-descricao">
-                A maior e mais imersiva evolução da série Grand Theft Auto até o
-                momento.
+          <p class="rotulo">Protagonistas</p>
+          <h2 class="secao-titulo">Jason &amp; Lucia</h2>
+        </div>
+
+        <div class="jl-grid aparecer">
+          <article class="jl-painel jl-painel-jason" tabindex="0">
+            <img
+              class="jl-imagem jl-imagem-jason"
+              src="assets/jason.jpg"
+              alt="Jason Duval em Vice City"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="jl-info">
+              <p class="jl-numero">01</p>
+              <h3 class="jl-nome">Jason Duval</h3>
+              <p class="jl-texto">
+                Criado em Vice City, Jason se vê envolvido em um golpe que dá
+                errado — e passa a depender de Lucia mais do que imaginava ser
+                capaz.
               </p>
-
-              <a href="#" class="botao botao-primario card-video-botao">
-                <img src="assets/icone-play.png" alt="Reproduzir vídeo" />
-
-                Ver agora
-              </a>
             </div>
           </article>
+
+          <article class="jl-painel jl-painel-lucia" tabindex="0">
+            <img
+              class="jl-imagem jl-imagem-lucia"
+              src="assets/lucia.jpg"
+              alt="Lucia Caminos em Vice City"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="jl-info">
+              <p class="jl-numero">02</p>
+              <h3 class="jl-nome">Lucia Caminos</h3>
+              <p class="jl-texto">
+                Vinda de Leonida, Lucia carrega o peso do próprio passado e a
+                certeza de que, dessa vez, precisa confiar em alguém para
+                sobreviver.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <div class="divisoria divisoria-feixe" aria-hidden="true"></div>
+
+      <!-- LEONIDA + UM MUNDO VIVO -->
+      <section class="secao-leonida" id="leonida">
+        <div class="conteudo-central aparecer leonida-intro">
+          <p class="rotulo">GTA VI</p>
+          <h2 class="secao-titulo secao-titulo-leonida">Leonida</h2>
+          <p class="leonida-subtitulo">Vice City e além.</p>
+          <p class="leonida-texto">
+            Um estado vibrante e perigoso. De praias ensolaradas a pântanos
+            sombrios, Leonida é mais do que um destino — é um estilo de vida.
+          </p>
+        </div>
+
+        <div class="leonida-mapa-wrap aparecer">
+          <div class="leonida-mapa-coluna">
+            <img
+              class="leonida-mapa-imagem"
+              src="assets/mapa-leonida.png"
+              alt="Mapa neon do estado de Leonida"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          <div class="leonida-coluna-info">
+            <div class="leonida-info" id="leonida-info">
+              <p class="leonida-info-numero">01</p>
+              <h3 class="leonida-info-nome" id="leonida-info-nome">Vice City</h3>
+              <p class="leonida-info-texto" id="leonida-info-texto">
+                A cidade que nunca dorme. Luzes, festas e oportunidades em cada
+                esquina.
+              </p>
+            </div>
+
+            <div class="leonida-regioes">
+              <button
+                class="leonida-regiao-botao ativo"
+                data-regiao="vice-city"
+                type="button"
+              >
+                <span class="leonida-regiao-numero">01</span>
+                <span class="leonida-regiao-texto">
+                  <span class="leonida-regiao-nome">Vice City</span>
+                  <span class="leonida-regiao-resumo">Cidade costeira / vida urbana</span>
+                </span>
+              </button>
+              <button
+                class="leonida-regiao-botao"
+                data-regiao="grassrivers"
+                type="button"
+              >
+                <span class="leonida-regiao-numero">02</span>
+                <span class="leonida-regiao-texto">
+                  <span class="leonida-regiao-nome">Grassrivers</span>
+                  <span class="leonida-regiao-resumo">Pântanos / natureza selvagem</span>
+                </span>
+              </button>
+              <button
+                class="leonida-regiao-botao"
+                data-regiao="leonida-keys"
+                type="button"
+              >
+                <span class="leonida-regiao-numero">03</span>
+                <span class="leonida-regiao-texto">
+                  <span class="leonida-regiao-nome">Leonida Keys</span>
+                  <span class="leonida-regiao-resumo">Ilhas / praias / horizonte</span>
+                </span>
+              </button>
+              <button
+                class="leonida-regiao-botao"
+                data-regiao="port-gellhorn"
+                type="button"
+              >
+                <span class="leonida-regiao-numero">04</span>
+                <span class="leonida-regiao-texto">
+                  <span class="leonida-regiao-nome">Port Gellhorn</span>
+                  <span class="leonida-regiao-resumo">Indústria / comércio / porto</span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="divisoria divisoria-particulas" aria-hidden="true"></div>
+
+        <div class="mundo-vivo">
+          <div class="conteudo-central aparecer">
+            <p class="rotulo">Leonida</p>
+            <h2 class="secao-titulo">Um Mundo Vivo</h2>
+          </div>
+
+          <div class="mundo-vivo-cards aparecer">
+            <article class="card-mundo card-mundo-crime">
+              <div
+                class="card-mundo-imagem"
+                style="background-image: url('assets/mundo-crime.jpg')"
+              ></div>
+              <div class="card-mundo-info">
+                <span class="card-mundo-indicador"></span>
+                <h3>Crime</h3>
+                <p>O perigo está em todos os lugares.</p>
+              </div>
+            </article>
+            <article class="card-mundo card-mundo-nightlife">
+              <div
+                class="card-mundo-imagem"
+                style="background-image: url('assets/mundo-nightlife.jpg')"
+              ></div>
+              <div class="card-mundo-info">
+                <span class="card-mundo-indicador"></span>
+                <h3>Nightlife</h3>
+                <p>Bares, clubes e festas até o amanhecer.</p>
+              </div>
+            </article>
+            <article class="card-mundo card-mundo-praias">
+              <div
+                class="card-mundo-imagem"
+                style="background-image: url('assets/mundo-praias.jpg')"
+              ></div>
+              <div class="card-mundo-info">
+                <span class="card-mundo-indicador"></span>
+                <h3>Praias</h3>
+                <p>Sol, mar e muita liberdade.</p>
+              </div>
+            </article>
+            <article class="card-mundo card-mundo-estradas">
+              <div
+                class="card-mundo-imagem"
+                style="background-image: url('assets/mundo-estradas.jpg')"
+              ></div>
+              <div class="card-mundo-info">
+                <span class="card-mundo-indicador"></span>
+                <h3>Estradas</h3>
+                <p>Grandes estradas, novos horizontes.</p>
+              </div>
+            </article>
+            <article class="card-mundo card-mundo-natureza">
+              <div
+                class="card-mundo-imagem"
+                style="background-image: url('assets/mundo-natureza.jpg')"
+              ></div>
+              <div class="card-mundo-info">
+                <span class="card-mundo-indicador"></span>
+                <h3>Natureza</h3>
+                <p>Pântanos e uma vida selvagem imprevisível.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRAILERS -->
+      <section class="secao-trailers" id="trailers">
+        <div class="conteudo-central aparecer">
+          <p class="rotulo">Vídeos</p>
+          <h2 class="secao-titulo">Trailers</h2>
+        </div>
+
+        <div class="conteudo-central trailers-grid aparecer">
+          <article class="card-trailer">
+            <div
+              class="card-trailer-imagem"
+              style="background-image: url('assets/poster-trailer-1.jpg')"
+            ></div>
+            <button
+              class="card-trailer-play"
+              data-video="assets/trailer-1.mp4"
+              data-titulo="Trailer 1"
+              aria-label="Reproduzir Trailer 1"
+            >
+              <img src="assets/icone-play.png" alt="" />
+            </button>
+            <div class="card-trailer-conteudo">
+              <p class="card-trailer-titulo">Trailer 1</p>
+              <p class="card-trailer-meta">Dez 2023 · 1:30</p>
+            </div>
+          </article>
+
+          <article class="card-trailer">
+            <div
+              class="card-trailer-imagem"
+              style="background-image: url('assets/poster-trailer-2.jpg')"
+            ></div>
+            <button
+              class="card-trailer-play"
+              data-video="assets/trailer-2.mp4"
+              data-titulo="Trailer 2"
+              aria-label="Reproduzir Trailer 2"
+            >
+              <img src="assets/icone-play.png" alt="" />
+            </button>
+            <div class="card-trailer-conteudo">
+              <p class="card-trailer-titulo">Trailer 2</p>
+              <p class="card-trailer-meta">Mai 2025 · 2:47</p>
+            </div>
+          </article>
+
+          <article class="card-trailer">
+            <div
+              class="card-trailer-imagem"
+              style="background-image: url('assets/card-trailer.png')"
+            ></div>
+            <a
+              class="card-trailer-play card-trailer-link"
+              href="https://youtu.be/tJbzMqJGH4k"
+              target="_blank"
+              rel="noopener"
+              aria-label="Assistir An Extended Look no YouTube"
+            >
+              <img src="assets/icone-play.png" alt="" />
+            </a>
+            <div class="card-trailer-conteudo">
+              <p class="card-trailer-titulo">An Extended Look</p>
+              <p class="card-trailer-meta">Ago 2026 · 26 min · YouTube</p>
+            </div>
+          </article>
+        </div>
+
+        <p class="conteudo-central trailers-proximo aparecer">
+          Próximo material oficial — <span>em breve</span>
+        </p>
+      </section>
+
+      <!-- Modal de vídeo, reutilizado pelos trailers -->
+      <div class="video-modal" id="video-modal">
+        <button
+          class="video-modal-fechar"
+          id="video-modal-fechar"
+          aria-label="Fechar vídeo"
+        >
+          &times;
+        </button>
+        <div class="video-modal-conteudo">
+          <video
+            id="video-modal-player"
+            class="video-modal-player"
+            controls
+            playsinline
+            preload="none"
+          ></video>
+          <p class="video-modal-indisponivel" id="video-modal-indisponivel">
+            Vídeo em breve.
+          </p>
+        </div>
+      </div>
+
+      <!-- GALERIA -->
+      <section class="secao-galeria" id="galeria">
+        <div class="galeria-fundo" id="galeria-fundo" aria-hidden="true"></div>
+
+        <div class="conteudo-central aparecer">
+          <p class="rotulo">Leonida</p>
+          <h2 class="secao-titulo">Galeria</h2>
+          <p class="galeria-texto">Imagens que contam histórias.</p>
+        </div>
+
+        <div class="galeria-grade aparecer">
+          <button
+            class="galeria-item galeria-item-1"
+            data-legenda="Oficina à beira da estrada em Vice City"
+            data-imagem="assets/galeria-01.jpg"
+          >
+            <img
+              class="galeria-item-imagem"
+              src="assets/galeria-01.jpg"
+              alt="Oficina à beira da estrada, com Vice City ao fundo ao entardecer"
+              loading="lazy"
+              decoding="async"
+            />
+          </button>
+          <button
+            class="galeria-item galeria-item-2"
+            data-legenda="Fuga pelas águas de Vice City"
+            data-imagem="assets/galeria-02.jpg"
+          >
+            <img
+              class="galeria-item-imagem"
+              src="assets/galeria-02.jpg"
+              alt="Barco em fuga da polícia nas águas de Vice City"
+              loading="lazy"
+              decoding="async"
+            />
+          </button>
+          <button
+            class="galeria-item galeria-item-3"
+            data-legenda="Salto sobre a costa de Leonida"
+            data-imagem="assets/galeria-03.jpg"
+          >
+            <img
+              class="galeria-item-imagem"
+              src="assets/galeria-03.jpg"
+              alt="Salto de paraquedas sobre a costa de Leonida"
+              loading="lazy"
+              decoding="async"
+            />
+          </button>
+          <button
+            class="galeria-item galeria-item-4"
+            data-legenda="Vida noturna em Vice City"
+            data-imagem="assets/galeria-04.jpg"
+          >
+            <img
+              class="galeria-item-imagem"
+              src="assets/galeria-04.jpg"
+              alt="Vida noturna em uma boate de Vice City"
+              loading="lazy"
+              decoding="async"
+            />
+          </button>
+          <button
+            class="galeria-item galeria-item-5"
+            data-legenda="Vice City vista do alto, à noite"
+            data-imagem="assets/galeria-05.jpg"
+          >
+            <img
+              class="galeria-item-imagem"
+              src="assets/galeria-05.jpg"
+              alt="Vista noturna de Vice City com roda-gigante ao fundo"
+              loading="lazy"
+              decoding="async"
+            />
+          </button>
+          <button
+            class="galeria-item galeria-item-6"
+            data-legenda="Perseguição nas estradas de Leonida"
+            data-imagem="assets/galeria-06.jpg"
+          >
+            <img
+              class="galeria-item-imagem"
+              src="assets/galeria-06.jpg"
+              alt="Perseguição policial em uma estrada de Leonida"
+              loading="lazy"
+              decoding="async"
+            />
+          </button>
+        </div>
+      </section>
+
+      <div class="galeria-lightbox" id="galeria-lightbox">
+        <button
+          class="galeria-lightbox-fechar"
+          id="galeria-lightbox-fechar"
+          aria-label="Fechar imagem"
+        >
+          &times;
+        </button>
+        <img
+          class="galeria-lightbox-imagem"
+          id="galeria-lightbox-imagem"
+          src=""
+          alt=""
+        />
+        <p class="galeria-lightbox-legenda" id="galeria-lightbox-legenda"></p>
+      </div>
+
+      <div class="divisoria divisoria-waveform" aria-hidden="true"></div>
+
+      <!-- THE SOUND OF VICE CITY (somente estrutura, sem faixas reais) -->
+      <section class="secao-sound" id="sound">
+        <div class="conteudo-central sound-grid aparecer">
+          <div class="sound-intro">
+            <p class="rotulo">Trilha sonora</p>
+            <h2 class="secao-titulo">The Sound of Vice City</h2>
+            <p class="sound-texto">
+              Uma seleção de faixas de Grand Theft Auto VI: The Album.
+            </p>
+          </div>
+
+          <div class="sound-player">
+            <div class="sound-vinil-wrap">
+              <img
+                class="sound-capa"
+                src="assets/album-gta6.jpg"
+                alt="Capa de Grand Theft Auto VI: The Album"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="sound-vinil" id="sound-vinil"></div>
+            </div>
+
+            <div class="sound-lista">
+              <button
+                class="sound-faixa"
+                data-audio="assets/musica-01.mp3"
+                data-nome="Macacoa 2000"
+                data-artista="Rauw Alejandro"
+              >
+                <span class="sound-faixa-play" aria-hidden="true">►</span>
+                <span class="sound-faixa-texto">
+                  <span class="sound-faixa-nome">Macacoa 2000</span>
+                  <span class="sound-faixa-artista">Rauw Alejandro</span>
+                </span>
+                <span class="sound-faixa-duracao">2:54</span>
+              </button>
+
+              <button
+                class="sound-faixa"
+                data-audio="assets/musica-02.mp3"
+                data-nome="RHYNO"
+                data-artista="Travis Scott"
+              >
+                <span class="sound-faixa-play" aria-hidden="true">►</span>
+                <span class="sound-faixa-texto">
+                  <span class="sound-faixa-nome">RHYNO</span>
+                  <span class="sound-faixa-artista"
+                    >Travis Scott (prod. Guy-Manuel de Homem-Christo)</span
+                  >
+                </span>
+                <span class="sound-faixa-duracao">3:00</span>
+              </button>
+
+              <button
+                class="sound-faixa"
+                data-audio="assets/musica-03.mp3"
+                data-nome="That's It"
+                data-artista="Yung Lean"
+              >
+                <span class="sound-faixa-play" aria-hidden="true">►</span>
+                <span class="sound-faixa-texto">
+                  <span class="sound-faixa-nome">That's It</span>
+                  <span class="sound-faixa-artista"
+                    >Yung Lean (feat. Future &amp; Metro Boomin)</span
+                  >
+                </span>
+                <span class="sound-faixa-duracao">2:42</span>
+              </button>
+
+              <button
+                class="sound-faixa"
+                data-audio="assets/musica-04.mp3"
+                data-nome="Last Thing You Need"
+                data-artista="Morgan Wallen"
+              >
+                <span class="sound-faixa-play" aria-hidden="true">►</span>
+                <span class="sound-faixa-texto">
+                  <span class="sound-faixa-nome">Last Thing You Need</span>
+                  <span class="sound-faixa-artista">Morgan Wallen</span>
+                </span>
+                <span class="sound-faixa-duracao">3:16</span>
+              </button>
+
+              <button
+                class="sound-faixa"
+                data-audio="assets/musica-05.mp3"
+                data-nome="Bright Lights, Big City"
+                data-artista="Keith Richards"
+              >
+                <span class="sound-faixa-play" aria-hidden="true">►</span>
+                <span class="sound-faixa-texto">
+                  <span class="sound-faixa-nome">Bright Lights, Big City</span>
+                  <span class="sound-faixa-artista">Keith Richards</span>
+                </span>
+                <span class="sound-faixa-duracao">3:31</span>
+              </button>
+
+              <div class="sound-barra">
+                <div class="sound-barra-progresso" id="sound-barra-progresso"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- onda sonora ambiente, full-width, na base da seção — nasce da
+             divisória entre Sound e Edições -->
+        <div class="sound-onda" id="sound-onda" aria-hidden="true"></div>
+
+        <audio id="sound-audio" preload="none"></audio>
+      </section>
+
+      <div class="divisoria divisoria-simples" aria-hidden="true"></div>
+
+      <!-- EDIÇÕES -->
+      <section class="secao-edicoes" id="edicoes">
+        <div class="conteudo-central aparecer">
+          <p class="rotulo">Pré-venda</p>
+          <h2 class="secao-titulo">Escolha sua Edição</h2>
+        </div>
+
+        <div class="edicoes-grid aparecer">
+          <article class="card-edicao">
+            <img
+              class="card-edicao-imagem"
+              src="assets/edicao-standard.jpg"
+              alt="Capa da edição Standard de Grand Theft Auto VI"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="card-edicao-conteudo">
+              <h3>Standard</h3>
+              <p>Grand Theft Auto VI — o jogo completo.</p>
+              <p class="card-edicao-detalhe">
+                PlayStation 5 e Xbox Series X|S.
+              </p>
+              <a
+                href="https://www.rockstargames.com/VI/editions"
+                target="_blank"
+                rel="noopener"
+                class="botao botao-secundario"
+                >Saiba mais</a
+              >
+            </div>
+          </article>
+
+          <article class="card-edicao card-edicao-ultimate">
+            <img
+              class="card-edicao-imagem card-edicao-imagem-ultimate"
+              src="assets/edicao-ultimate.jpg"
+              alt="Capa da Ultimate Edition de Grand Theft Auto VI"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="card-edicao-conteudo">
+              <h3>Ultimate</h3>
+              <p>Grand Theft Auto VI + conteúdos extras.</p>
+              <p class="card-edicao-detalhe">
+                PlayStation 5 e Xbox Series X|S.
+              </p>
+              <a
+                href="https://www.rockstargames.com/VI/editions"
+                target="_blank"
+                rel="noopener"
+                class="botao botao-secundario"
+                >Saiba mais</a
+              >
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- COUNTDOWN -->
+      <section class="secao-countdown" id="lancamento">
+        <div class="conteudo-central countdown-conteudo aparecer">
+          <p class="rotulo">Lançamento</p>
+          <h2 class="countdown-titulo">Grand Theft Auto VI</h2>
+          <p class="countdown-data">19 de Novembro de 2026</p>
+
+          <div class="countdown-numeros" id="countdown-numeros">
+            <div class="countdown-bloco">
+              <span class="countdown-valor" id="cd-dias">00</span>
+              <span class="countdown-rotulo">Dias</span>
+            </div>
+            <div class="countdown-bloco">
+              <span class="countdown-valor" id="cd-horas">00</span>
+              <span class="countdown-rotulo">Horas</span>
+            </div>
+            <div class="countdown-bloco">
+              <span class="countdown-valor" id="cd-minutos">00</span>
+              <span class="countdown-rotulo">Minutos</span>
+            </div>
+            <div class="countdown-bloco">
+              <span class="countdown-valor" id="cd-segundos">00</span>
+              <span class="countdown-rotulo">Segundos</span>
+            </div>
+          </div>
+
+          <p class="countdown-mensagem" id="countdown-mensagem" hidden>
+            THE WAIT IS OVER.
+          </p>
         </div>
       </section>
     </main>
