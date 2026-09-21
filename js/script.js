@@ -54,6 +54,18 @@ if (blocos.length) {
 if (window.gsap && window.ScrollTrigger && video && capa && capaPainel && capaConteudo) {
     gsap.registerPlugin(ScrollTrigger);
 
+    // Em touch (celular/tablet), o scroll por inércia manda poucos eventos
+    // "grandes" em vez de muitos pequenos — isso fazia o vídeo "pular"
+    // frames em vez de acompanhar suavemente. normalizeScroll faz o GSAP
+    // assumir o scroll nesses dispositivos e emitir atualizações a cada
+    // frame, como acontece nativamente no desktop. Não é chamado em
+    // ponteiro fino (mouse/trackpad) para não alterar nada no desktop.
+    const ehTouch = window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+
+    if (ehTouch && typeof ScrollTrigger.normalizeScroll === "function") {
+        ScrollTrigger.normalizeScroll(true);
+    }
+
     // O vídeo nunca fica em reprodução livre: ele só avança quando o
     // ScrollTrigger manda. Isso evita que o autoplay "compita" com o scroll.
     video.muted = true;
@@ -327,13 +339,27 @@ if (window.gsap && window.ScrollTrigger && video && capa && capaPainel && capaCo
             player.classList.add("ativo");
             indisponivel.classList.remove("ativo");
             player.play().catch(function () {
-                // autoplay pode ser bloqueado; o controle manual continua disponível
+                // autoplay pode ser bloqueado; os controles nativos do
+                // player continuam disponíveis para o usuário iniciar manualmente
             });
         } else {
             player.classList.remove("ativo");
             indisponivel.classList.add("ativo");
         }
     };
+
+    // se o arquivo falhar de verdade (caminho errado, formato não suportado
+    // pelo navegador etc.), mostra uma mensagem em vez de deixar a tela
+    // muda/preta — sem isso, uma falha parece só "não fazer nada"
+    player.addEventListener("error", function () {
+        if (!player.currentSrc) {
+            return;
+        }
+
+        player.classList.remove("ativo");
+        indisponivel.textContent = "Não foi possível carregar o vídeo.";
+        indisponivel.classList.add("ativo");
+    });
 
     const fecharModal = function () {
         modal.classList.remove("aberto");
@@ -409,13 +435,34 @@ if (window.gsap && window.ScrollTrigger && video && capa && capaPainel && capaCo
         }
     });
 
-    // Fundo da seção reagindo ao hover das miniaturas.
-    // Só é ligado em dispositivos com cursor real; no toque a galeria
-    // continua igual e o lightbox segue funcionando normalmente.
+    // Fundo da seção reagindo à imagem em destaque.
+    // Mouse: hover. Toque (celular/tablet): já entra com a primeira imagem
+    // e atualiza conforme o dedo desliza sobre as miniaturas.
     const secaoGaleria = document.getElementById("galeria");
+    const gradeGaleria = document.querySelector(".galeria-grade");
     const temHoverReal =
         window.matchMedia &&
         window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+    const mostrarFundoDaImagem = function (src) {
+        if (!secaoGaleria || !src) {
+            return;
+        }
+
+        // IMPORTANTE: url() dentro de uma custom property é resolvida
+        // relativa ao arquivo CSS que consome o var() (css/style.css),
+        // não ao index.html. Por isso o caminho relativo "assets/..."
+        // quebrava (o navegador procurava em css/assets/...).
+        // Resolvendo para uma URL absoluta aqui, o caminho funciona
+        // não importa onde a variável é usada.
+        const urlAbsoluta = new URL(src, document.baseURI).href;
+
+        secaoGaleria.style.setProperty(
+            "--galeria-imagem",
+            "url('" + urlAbsoluta + "')"
+        );
+        secaoGaleria.classList.add("galeria-ativa");
+    };
 
     if (secaoGaleria && temHoverReal) {
         const limparFundo = function () {
@@ -424,25 +471,7 @@ if (window.gsap && window.ScrollTrigger && video && capa && capaPainel && capaCo
 
         itens.forEach(function (item) {
             item.addEventListener("mouseenter", function () {
-                const src = item.getAttribute("data-imagem");
-
-                if (!src) {
-                    return;
-                }
-
-                // IMPORTANTE: url() dentro de uma custom property é resolvida
-                // relativa ao arquivo CSS que consome o var() (css/style.css),
-                // não ao index.html. Por isso o caminho relativo "assets/..."
-                // quebrava (o navegador procurava em css/assets/...).
-                // Resolvendo para uma URL absoluta aqui, o caminho funciona
-                // não importa onde a variável é usada.
-                const urlAbsoluta = new URL(src, document.baseURI).href;
-
-                secaoGaleria.style.setProperty(
-                    "--galeria-imagem",
-                    "url('" + urlAbsoluta + "')"
-                );
-                secaoGaleria.classList.add("galeria-ativa");
+                mostrarFundoDaImagem(item.getAttribute("data-imagem"));
             });
 
             item.addEventListener("mouseleave", limparFundo);
@@ -451,6 +480,34 @@ if (window.gsap && window.ScrollTrigger && video && capa && capaPainel && capaCo
         // rede de segurança: se o cursor sair da seção inteira, o fundo
         // nunca fica preso ligado
         secaoGaleria.addEventListener("mouseleave", limparFundo);
+    } else if (secaoGaleria && gradeGaleria && itens.length) {
+        // Toque: sem hover, então o fundo começa já com a primeira imagem
+        // (nunca fica "sem nada") e troca conforme o dedo passa por cima
+        // de cada miniatura — sem interferir no toque que abre o lightbox.
+        let itemAtual = itens[0];
+        mostrarFundoDaImagem(itemAtual.getAttribute("data-imagem"));
+
+        const atualizarPeloToque = function (toque) {
+            const alvo = document.elementFromPoint(toque.clientX, toque.clientY);
+            const item = alvo ? alvo.closest(".galeria-item") : null;
+
+            if (item && item !== itemAtual) {
+                itemAtual = item;
+                mostrarFundoDaImagem(item.getAttribute("data-imagem"));
+            }
+        };
+
+        gradeGaleria.addEventListener("touchstart", function (evento) {
+            if (evento.touches[0]) {
+                atualizarPeloToque(evento.touches[0]);
+            }
+        }, { passive: true });
+
+        gradeGaleria.addEventListener("touchmove", function (evento) {
+            if (evento.touches[0]) {
+                atualizarPeloToque(evento.touches[0]);
+            }
+        }, { passive: true });
     }
 })();
 

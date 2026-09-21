@@ -52,6 +52,23 @@ body{
     filter: brightness(0.7);
 }
 
+/* Em telas estreitas e altas (celular/tablet), "cover" sobre um vídeo
+   16:9 corta quase tudo dos lados — só sobrava o Jason no centro. Aqui o
+   vídeo passa a mostrar o quadro inteiro (contain), e o espaço vazio
+   acima/abaixo dele ganha um fundo desfocado do próprio vídeo, para não
+   parecer uma barra preta. Desktop não é afetado. */
+@media (max-width: 900px){
+    .capa-painel{
+        background-image: url('../assets/capa-fundo-mobile.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .capa-video{
+        object-fit: contain;
+    }
+}
+
 .capa{
     position: relative;
     height: 100vh;
@@ -210,8 +227,15 @@ main{
 }
 
 .secao-historia{
+    position: relative;
+    overflow: hidden;
     padding: 96px 0 56px;
     text-align: center;
+}
+
+.secao-historia .conteudo-central{
+    position: relative;
+    z-index: 1;
 }
 
 .rotulo{
@@ -942,9 +966,16 @@ main{
    TRAILERS
    ========================================================================== */
 .secao-trailers{
+    position: relative;
+    overflow: hidden;
     padding: 100px 0 60px;
     background-color: var(--cor-fundo);
     text-align: center;
+}
+
+.secao-trailers > .conteudo-central{
+    position: relative;
+    z-index: 1;
 }
 
 .trailers-grid{
@@ -981,6 +1012,9 @@ main{
     position: absolute;
     inset: 0;
     background: linear-gradient(to top, rgba(13,13,26,0.92), transparent 55%);
+    /* puramente decorativo — nunca deve capturar toque/clique, mesmo que
+       fique por cima do botão de play na ordem de pintura */
+    pointer-events: none;
 }
 
 .card-trailer-play{
@@ -1153,14 +1187,14 @@ main{
     background: linear-gradient(to bottom, rgba(13,13,26,0.6), rgba(13,13,26,0.85));
 }
 
-/* so em dispositivos com cursor real; no toque a galeria segue normal */
-@media (hover: hover) and (pointer: fine){
-    .secao-galeria.galeria-ativa .galeria-fundo{
-        opacity: 0.85;
-        /* leve zoom continuo enquanto a imagem esta ativa, para dar a
-           sensacao cinematografica pedida */
-        transform: scale(1.12);
-    }
+/* Antes só funcionava com cursor real (media query hover:hover); agora o
+   próprio JS decide quando ligar — no mouse é o hover, no toque é o
+   dedo passando sobre as miniaturas — então a regra vale para os dois. */
+.secao-galeria.galeria-ativa .galeria-fundo{
+    opacity: 0.85;
+    /* leve zoom continuo enquanto a imagem esta ativa, para dar a
+       sensacao cinematografica pedida */
+    transform: scale(1.12);
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -1228,6 +1262,10 @@ main{
 }
 
 @media (max-width: 800px){
+    .secao-galeria{
+        padding: 56px 0 48px;
+    }
+
     .galeria-grade{
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(6, 160px);
@@ -1506,6 +1544,10 @@ main{
 }
 
 @media (max-width: 800px){
+    .secao-sound{
+        padding: 56px 0 130px;
+    }
+
     .sound-onda{
         height: 120px;
     }
@@ -1831,4 +1873,54 @@ main{
 .sound-faixa.tocando .sound-faixa-nome{
     color: #ffffff;
     font-weight: 600;
+}
+
+/* ==========================================================================
+   IMAGEM DE FUNDO NO TOPO DE SEÇÃO — reutilizada em História e Trailers
+   Sobe do topo da seção, com leve escurecimento e um degradê na base que
+   se funde ao fundo da própria seção, dando sensação de "background",
+   não de foto solta.
+   ========================================================================== */
+.secao-fundo-imagem{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    height: min(50vh, 480px);
+    background-size: cover;
+    background-position: top center;
+    /* escurece a foto em ~15%, como pedido — sutil, não um véu escuro */
+    filter: brightness(0.85);
+    pointer-events: none;
+}
+
+/* degradê na base da imagem, dissolvendo para a cor de fundo da seção */
+.secao-fundo-imagem::after{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 0%, transparent 35%, var(--cor-fundo) 100%);
+}
+
+.secao-fundo-historia{
+    background-image: url('../assets/historia-fundo-vicecity.jpg');
+    background-position: center 78%;
+}
+
+.secao-fundo-trailers{
+    background-image: url('../assets/trailers-fundo-jason.jpg');
+    background-position: center 30%;
+}
+
+.secao-fundo-trailers::after{
+    background: linear-gradient(to bottom, transparent 0%, transparent 35%, var(--cor-fundo) 100%);
+}
+
+/* Em celular/tablet a imagem fica só no topo — pode passar por trás do
+   título e do primeiro card/trailer, mas não domina a seção inteira. */
+@media (max-width: 900px){
+    .secao-fundo-imagem{
+        height: min(38vh, 320px);
+    }
 }
