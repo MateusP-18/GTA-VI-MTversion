@@ -116,7 +116,14 @@
 
     <main>
       <section class="secao-historia" id="historia">
-        <div class="secao-fundo-imagem secao-fundo-historia" aria-hidden="true"></div>
+        <img
+          class="secao-fundo-imagem secao-fundo-historia"
+          src="assets/historia-fundo-vicecity.jpg"
+          alt=""
+          aria-hidden="true"
+          decoding="async"
+        />
+        <div class="secao-fundo-degrade" aria-hidden="true"></div>
 
         <div class="conteudo-central aparecer">
           <p class="rotulo">História</p>
@@ -266,8 +273,6 @@
           </div>
         </div>
 
-        <div class="divisoria divisoria-particulas" aria-hidden="true"></div>
-
         <div class="mundo-vivo">
           <div class="conteudo-central aparecer">
             <p class="rotulo">Leonida</p>
@@ -334,9 +339,18 @@
         </div>
       </section>
 
+      <div class="divisoria divisoria-particulas" aria-hidden="true"></div>
+
       <!-- TRAILERS -->
       <section class="secao-trailers" id="trailers">
-        <div class="secao-fundo-imagem secao-fundo-trailers" aria-hidden="true"></div>
+        <img
+          class="secao-fundo-imagem secao-fundo-trailers"
+          src="assets/trailers-fundo-jason.jpg"
+          alt=""
+          aria-hidden="true"
+          decoding="async"
+        />
+        <div class="secao-fundo-degrade" aria-hidden="true"></div>
 
         <div class="conteudo-central aparecer">
           <p class="rotulo">Vídeos</p>
@@ -352,7 +366,9 @@
             <button
               class="card-trailer-play"
               data-video="assets/trailer-1.mp4"
+              data-poster="assets/poster-trailer-1.jpg"
               data-titulo="Trailer 1"
+              data-youtube="https://www.youtube.com/watch?v=QdBZY2fkU-0"
               aria-label="Reproduzir Trailer 1"
             >
               <img src="assets/icone-play.png" alt="" />
@@ -371,7 +387,9 @@
             <button
               class="card-trailer-play"
               data-video="assets/trailer-2.mp4"
+              data-poster="assets/poster-trailer-2.jpg"
               data-titulo="Trailer 2"
+              data-youtube="https://www.youtube.com/watch?v=VQRLujxTm3c"
               aria-label="Reproduzir Trailer 2"
             >
               <img src="assets/icone-play.png" alt="" />
@@ -569,16 +587,18 @@
             <div class="sound-lista">
               <button
                 class="sound-faixa"
-                data-audio="assets/musica-01.mp3"
-                data-nome="Macacoa 2000"
-                data-artista="Rauw Alejandro"
+                data-audio="assets/musica-03.mp3"
+                data-nome="That's It"
+                data-artista="Yung Lean"
               >
                 <span class="sound-faixa-play" aria-hidden="true">►</span>
                 <span class="sound-faixa-texto">
-                  <span class="sound-faixa-nome">Macacoa 2000</span>
-                  <span class="sound-faixa-artista">Rauw Alejandro</span>
+                  <span class="sound-faixa-nome">That's It</span>
+                  <span class="sound-faixa-artista"
+                    >Yung Lean (feat. Future &amp; Metro Boomin)</span
+                  >
                 </span>
-                <span class="sound-faixa-duracao">2:54</span>
+                <span class="sound-faixa-duracao">2:42</span>
               </button>
 
               <button
@@ -599,18 +619,16 @@
 
               <button
                 class="sound-faixa"
-                data-audio="assets/musica-03.mp3"
-                data-nome="That's It"
-                data-artista="Yung Lean"
+                data-audio="assets/musica-01.mp3"
+                data-nome="Macacoa 2000"
+                data-artista="Rauw Alejandro"
               >
                 <span class="sound-faixa-play" aria-hidden="true">►</span>
                 <span class="sound-faixa-texto">
-                  <span class="sound-faixa-nome">That's It</span>
-                  <span class="sound-faixa-artista"
-                    >Yung Lean (feat. Future &amp; Metro Boomin)</span
-                  >
+                  <span class="sound-faixa-nome">Macacoa 2000</span>
+                  <span class="sound-faixa-artista">Rauw Alejandro</span>
                 </span>
-                <span class="sound-faixa-duracao">2:42</span>
+                <span class="sound-faixa-duracao">2:54</span>
               </button>
 
               <button

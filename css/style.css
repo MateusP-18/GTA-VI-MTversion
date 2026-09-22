@@ -1263,7 +1263,7 @@ main{
 
 @media (max-width: 800px){
     .secao-galeria{
-        padding: 56px 0 48px;
+        padding: 56px 0 24px;
     }
 
     .galeria-grade{
@@ -1545,7 +1545,7 @@ main{
 
 @media (max-width: 800px){
     .secao-sound{
-        padding: 56px 0 130px;
+        padding: 28px 0 130px;
     }
 
     .sound-onda{
@@ -1779,7 +1779,7 @@ main{
     100%{ transform: translateX(560%); opacity: 0; }
 }
 
-/* 2. LEONIDA -> UM MUNDO VIVO: pequenos pontos correndo pela linha */
+/* 2. UM MUNDO VIVO -> TRAILERS: pequenos pontos correndo pela linha */
 .divisoria-particulas{
     background: linear-gradient(90deg,
         transparent,
@@ -1885,42 +1885,54 @@ main{
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
+    width: 100%;
     z-index: 0;
     height: min(50vh, 480px);
-    background-size: cover;
-    background-position: top center;
+    object-fit: cover;
+    object-position: top center;
     /* escurece a foto em ~15%, como pedido — sutil, não um véu escuro */
     filter: brightness(0.85);
     pointer-events: none;
+    display: block;
 }
 
-/* degradê na base da imagem, dissolvendo para a cor de fundo da seção */
-.secao-fundo-imagem::after{
+/* degradê na base da imagem, dissolvendo para a cor de fundo da seção.
+   Como agora é uma <img>, o degradê vem de um elemento irmão (não um
+   ::after, que não se aplica bem sobre elementos substituídos). */
+.secao-fundo-imagem + .secao-fundo-degrade{
     content: "";
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    height: min(50vh, 480px);
     background: linear-gradient(to bottom, transparent 0%, transparent 35%, var(--cor-fundo) 100%);
+    pointer-events: none;
 }
 
 .secao-fundo-historia{
-    background-image: url('../assets/historia-fundo-vicecity.jpg');
-    background-position: center 78%;
+    object-position: center 78%;
+}
+
+/* só no desktop: imagem (letreiro + avião) um pouco mais para baixo e
+   levemente mais escura. No mobile/tablet fica como já estava. */
+@media (min-width: 901px){
+    .secao-fundo-historia{
+        object-position: center 66%;
+        filter: brightness(90%);
+    }
 }
 
 .secao-fundo-trailers{
-    background-image: url('../assets/trailers-fundo-jason.jpg');
-    background-position: center 30%;
-}
-
-.secao-fundo-trailers::after{
-    background: linear-gradient(to bottom, transparent 0%, transparent 35%, var(--cor-fundo) 100%);
+    object-position: center 30%;
 }
 
 /* Em celular/tablet a imagem fica só no topo — pode passar por trás do
    título e do primeiro card/trailer, mas não domina a seção inteira. */
 @media (max-width: 900px){
-    .secao-fundo-imagem{
+    .secao-fundo-imagem,
+    .secao-fundo-imagem + .secao-fundo-degrade{
         height: min(38vh, 320px);
     }
 }

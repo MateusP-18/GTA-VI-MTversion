@@ -38,13 +38,24 @@ if (menu) {
 }
 
 if (blocos.length) {
-    const observador = new IntersectionObserver(function (entradas) {
-        entradas.forEach(function (entrada) {
-            if (entrada.isIntersecting) {
-                entrada.target.classList.add("visivel");
-            }
-        });
-    });
+    // no desktop a tela é mais alta/larga e muitos blocos já nascem dentro
+    // (ou quase dentro) da área visível assim que a página carrega — então
+    // o "surgimento" acontecia de forma instantânea, sem dar pra perceber
+    // a rolagem. Com threshold + rootMargin, o bloco só vira "visivel"
+    // quando a pessoa realmente rolar até ele, em qualquer tamanho de tela.
+    const observador = new IntersectionObserver(
+        function (entradas) {
+            entradas.forEach(function (entrada) {
+                if (entrada.isIntersecting) {
+                    entrada.target.classList.add("visivel");
+                }
+            });
+        },
+        {
+            threshold: 0.15,
+            rootMargin: "0px 0px -10% 0px",
+        }
+    );
 
     blocos.forEach(function (bloco) {
         observador.observe(bloco);
@@ -328,16 +339,33 @@ if (window.gsap && window.ScrollTrigger && video && capa && capaPainel && capaCo
         return;
     }
 
-    const abrirModal = function (src) {
+    // detecta "não-desktop" pela capacidade real do aparelho (tela sem
+    // hover / toque como ponteiro principal), e não pela largura da
+    // janela — assim uma janela de desktop redimensionada continua
+    // abrindo o vídeo local normalmente, só celular/tablet vai pro YouTube
+    const ehAparelhoNaoDesktop = function () {
+        return window.matchMedia("(hover: none), (pointer: coarse)").matches;
+    };
+
+    const abrirModal = function (src, poster) {
         modal.classList.add("aberto");
 
         // avisa o player de música para parar e não sobrepor os dois áudios
         document.dispatchEvent(new CustomEvent("trailer:abriu"));
 
         if (src) {
+            if (poster) {
+                player.poster = poster;
+            }
+
             player.src = src;
             player.classList.add("ativo");
             indisponivel.classList.remove("ativo");
+
+            // load() garante um estado limpo antes do play() — em alguns
+            // navegadores móveis, tocar logo após trocar o src sem isso
+            // pode falhar silenciosamente
+            player.load();
             player.play().catch(function () {
                 // autoplay pode ser bloqueado; os controles nativos do
                 // player continuam disponíveis para o usuário iniciar manualmente
@@ -365,12 +393,24 @@ if (window.gsap && window.ScrollTrigger && video && capa && capaPainel && capaCo
         modal.classList.remove("aberto");
         player.pause();
         player.removeAttribute("src");
+        player.removeAttribute("poster");
         player.load();
     };
 
     botoesPlay.forEach(function (botao) {
         botao.addEventListener("click", function () {
-            abrirModal(botao.getAttribute("data-video"));
+            const linkYoutube = botao.getAttribute("data-youtube");
+
+            // em celular/tablet, os cards com link do YouTube abrem o
+            // YouTube em vez do player local (mantendo a capa/thumbnail
+            // do card como está); no desktop segue abrindo o modal com
+            // o vídeo local, como antes
+            if (linkYoutube && ehAparelhoNaoDesktop()) {
+                window.open(linkYoutube, "_blank", "noopener");
+                return;
+            }
+
+            abrirModal(botao.getAttribute("data-video"), botao.getAttribute("data-poster"));
         });
     });
 
@@ -436,13 +476,19 @@ if (window.gsap && window.ScrollTrigger && video && capa && capaPainel && capaCo
     });
 
     // Fundo da seção reagindo à imagem em destaque.
-    // Mouse: hover. Toque (celular/tablet): já entra com a primeira imagem
-    // e atualiza conforme o dedo desliza sobre as miniaturas.
+    // Mouse: hover (sempre ligado, não atrapalha em quem não tem mouse).
+    // Toque (celular/tablet): já entra com a primeira imagem e atualiza
+    // conforme o dedo desliza sobre as miniaturas.
     const secaoGaleria = document.getElementById("galeria");
     const gradeGaleria = document.querySelector(".galeria-grade");
-    const temHoverReal =
-        window.matchMedia &&
-        window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+    // Detecção direta de suporte a toque (mais confiável do que depender
+    // só de uma media query: alguns navegadores/dispositivos relatam
+    // hover/pointer de forma inconsistente e faziam essa função inteira
+    // ficar desligada sem nenhum aviso).
+    const suportaToque =
+        "ontouchstart" in window ||
+        (navigator.maxTouchPoints && navigator.maxTouchPoints > 0);
 
     const mostrarFundoDaImagem = function (src) {
         if (!secaoGaleria || !src) {
@@ -464,7 +510,9 @@ if (window.gsap && window.ScrollTrigger && video && capa && capaPainel && capaCo
         secaoGaleria.classList.add("galeria-ativa");
     };
 
-    if (secaoGaleria && temHoverReal) {
+    if (secaoGaleria) {
+        // Mouse: sempre ativo. Em telas de toque isso simplesmente nunca
+        // dispara sozinho, então não atrapalha em nada.
         const limparFundo = function () {
             secaoGaleria.classList.remove("galeria-ativa");
         };
@@ -477,10 +525,10 @@ if (window.gsap && window.ScrollTrigger && video && capa && capaPainel && capaCo
             item.addEventListener("mouseleave", limparFundo);
         });
 
-        // rede de segurança: se o cursor sair da seção inteira, o fundo
-        // nunca fica preso ligado
         secaoGaleria.addEventListener("mouseleave", limparFundo);
-    } else if (secaoGaleria && gradeGaleria && itens.length) {
+    }
+
+    if (secaoGaleria && gradeGaleria && itens.length && suportaToque) {
         // Toque: sem hover, então o fundo começa já com a primeira imagem
         // (nunca fica "sem nada") e troca conforme o dedo passa por cima
         // de cada miniatura — sem interferir no toque que abre o lightbox.
