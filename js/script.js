@@ -21,6 +21,7 @@
 const menu = document.getElementById("menu");
 const blocos = document.querySelectorAll(".aparecer");
 const video = document.querySelector(".capa-video");
+const capaVideoFundo = document.querySelector(".capa-video-fundo");
 const capa = document.querySelector(".capa");
 const capaPainel = document.querySelector(".capa-painel");
 const capaConteudo = document.querySelector(".capa-conteudo");
@@ -74,7 +75,13 @@ if (window.gsap && window.ScrollTrigger && video && capa && capaPainel && capaCo
     const ehTouch = window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 
     if (ehTouch && typeof ScrollTrigger.normalizeScroll === "function") {
-        ScrollTrigger.normalizeScroll(true);
+        // leve redução do momentum (inércia) do touch — só suaviza o
+        // "deslizar" depois que o dedo solta a tela nas seções normais.
+        // Não mexe na sincronia do hero: o vídeo é amarrado à posição
+        // absoluta do scroll (self.progress), não à velocidade do gesto,
+        // então essa mudança não altera PIXELS_POR_SEGUNDO nem o
+        // enquadramento/velocidade do vídeo.
+        ScrollTrigger.normalizeScroll({ momentum: 0.85 });
     }
     // O vídeo nunca fica em reprodução livre: ele só avança quando o
     // ScrollTrigger manda. Isso evita que o autoplay "compita" com o scroll.
@@ -155,6 +162,13 @@ if (window.gsap && window.ScrollTrigger && video && capa && capaPainel && capaCo
             const progressoSaidaConteudo = Math.min(self.progress / 0.18, 1);
 
             gsap.set(video, { opacity: progressoSaidaConteudo });
+
+            // fundo borrado (só existe visualmente no mobile, via CSS)
+            // segue exatamente a mesma curva do vídeo: some no topo,
+            // aparece junto com o vídeo, some de novo ao voltar ao topo
+            if (capaVideoFundo) {
+                gsap.set(capaVideoFundo, { opacity: progressoSaidaConteudo });
+            }
 
             gsap.set(capaConteudo, {
                 opacity: 1 - progressoSaidaConteudo,

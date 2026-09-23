@@ -52,12 +52,41 @@ body{
     filter: brightness(0.7);
 }
 
+/* Camada de ambientação atrás do vídeo quadrado do mobile: começa
+   invisível (display:none no desktop, opacity:0 no mobile) e é revelada
+   pelo MESMO progresso do ScrollTrigger do hero que já controla o vídeo
+   — nunca aparece sozinha, nunca fica presa visível. Isso é diferente do
+   antigo background fixo em .capa-painel (removido antes): aqui é uma
+   camada própria, atrás do vídeo, e não um fundo permanente do hero. */
+.capa-video-fundo{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
 /* Em telas estreitas e altas (celular/tablet), o vídeo passa a aparecer
    dentro de um quadro quase quadrado, centralizado, com folga ao redor —
-   em vez de ocupar a tela inteira. O fundo continua sendo o mesmo fundo
-   escuro do corpo da página (nenhuma imagem auxiliar atrás). Desktop não
-   é afetado: continua com o vídeo cobrindo o .capa-painel inteiro. */
+   em vez de ocupar a tela inteira. A camada .capa-video-fundo (acima)
+   entra como ambientação borrada atrás dele, sincronizada com o mesmo
+   progresso do scroll — nada fica visível antes da interação começar.
+   Desktop não é afetado: continua com o vídeo cobrindo o .capa-painel
+   inteiro e a camada de fundo permanece com display:none. */
 @media (max-width: 900px){
+    .capa-video-fundo{
+        display: block;
+        background-image: url('../assets/capa-fundo-mobile.jpg');
+        background-size: cover;
+        background-position: center;
+        filter: blur(24px) brightness(0.55);
+        transform: scale(1.15);
+    }
+
     .capa-video{
         top: 50%;
         left: 50%;
