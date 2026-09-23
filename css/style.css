@@ -413,6 +413,21 @@ main{
     color: #c4c0d8;
 }
 
+.rodape-credito{
+    color: #6e6e85;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.rodape-credito a{
+    color: #c4c0d8;
+    font-weight: 600;
+}
+
+.rodape-credito a:hover{
+    color: #ff3d8b;
+}
+
 @media (max-width: 700px){
     .capa-barra-conteudo{
         flex-direction: column;
@@ -1334,6 +1349,16 @@ main{
 @media (max-width: 800px){
     .secao-galeria{
         padding: 56px 0 24px;
+    }
+
+    /* No touch não existe hover, então o fundo já entra visível com a
+       primeira imagem da galeria (o JS ainda atualiza dinamicamente
+       conforme o dedo passa por cima de cada miniatura). É só uma
+       garantia via CSS puro — não depende do JS ter rodado a tempo. */
+    .galeria-fundo{
+        opacity: 0.85;
+        transform: scale(1.12);
+        background-image: var(--galeria-imagem, url('../assets/galeria-01.jpg'));
     }
 
     .galeria-grade{

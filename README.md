@@ -76,7 +76,14 @@ szpc-clone-gta/
 
 ### Trailers
 - Nos cards de Trailer 1 e Trailer 2, em **dispositivos que não são desktop**, o clique agora abre o vídeo oficial no YouTube (em vez do player local), mantendo a mesma capa/thumbnail do card. No desktop o comportamento não mudou: continua abrindo o modal com o vídeo local.
+- **Atualização final:** os três cards (Trailer 1, Trailer 2 e An Extended Look) agora abrem direto no YouTube em **qualquer dispositivo** (desktop, tablet e celular), como links simples (`<a target="_blank">`) — não existe mais modal/player local para os trailers. O placeholder "em breve" continua sem link. O modal de vídeo (`#video-modal`) e os arquivos `trailer-1.mp4`/`trailer-2.mp4` permanecem no projeto, apenas sem uso.
 - **Imagem de fundo da seção (`trailers-fundo-jason.jpg`) sumindo após publicar:** o arquivo, o nome, a capitalização e a referência no HTML estavam corretos — o problema não era de código. A causa mais provável identificada foi o arquivo não ter sido commitado/enviado ao repositório antes do último deploy (era, junto com `historia-fundo-vicecity.jpg`, o asset mais recente de todo o projeto). Resolvido do lado do versionamento/deploy.
+
+### Galeria
+- No celular, o fundo desfocado com a primeira imagem da galeria agora tem uma garantia via CSS (além da lógica já existente em JS), para nunca aparecer vazio antes de qualquer toque do usuário.
+
+### Rodapé
+- Adicionada a linha "Desenvolvido por **@MT Designs**", com o nome linkando para o perfil do Instagram (`instagram.com/mateusp_18`).
 
 ## Notas técnicas
 
