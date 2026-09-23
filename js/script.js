@@ -76,7 +76,6 @@ if (window.gsap && window.ScrollTrigger && video && capa && capaPainel && capaCo
     if (ehTouch && typeof ScrollTrigger.normalizeScroll === "function") {
         ScrollTrigger.normalizeScroll(true);
     }
-
     // O vídeo nunca fica em reprodução livre: ele só avança quando o
     // ScrollTrigger manda. Isso evita que o autoplay "compita" com o scroll.
     video.muted = true;
@@ -89,7 +88,12 @@ if (window.gsap && window.ScrollTrigger && video && capa && capaPainel && capaCo
     let duracaoVideo = 0;
     let videoPreparado = false;
     const LIMITE_SINCRONIA = 0.02; // segundos: evita seeks redundantes/jank
-    const PIXELS_POR_SEGUNDO = 500; // quanto maior, mais "espaço" o scroll dá pro vídeo
+    // no celular o dedo cobre uma distância de tela pequena, então com o
+    // mesmo valor do desktop o vídeo inteiro passava em pouquíssimo scroll
+    // e parecia "pular". Mais pixels por segundo = mais distância de scroll
+    // pro mesmo vídeo = avanço mais gradual e controlável. Desktop mantém
+    // exatamente o valor de antes.
+    const PIXELS_POR_SEGUNDO = ehTouch ? 900 : 500; // quanto maior, mais "espaço" o scroll dá pro vídeo
 
     // iOS/Safari mobile às vezes só permite currentTime funcionar de verdade
     // depois de o vídeo já ter sido "tocado" uma vez. Fazemos isso uma única
@@ -159,7 +163,18 @@ if (window.gsap && window.ScrollTrigger && video && capa && capaPainel && capaCo
             });
 
             if (capaBarra) {
-                gsap.set(capaBarra, { opacity: 1 - progressoSaidaConteudo });
+                // quando o conteúdo termina de sumir (opacity chega a 0), o
+                // botão "Reserve agora" para de aceitar clique/toque; volta
+                // a aceitar assim que a barra volta a ficar visível (ex.:
+                // ao rolar de volta pro topo) — sempre em sincronia com o
+                // mesmo progresso que controla a opacidade, sem estado
+                // separado.
+                const conteudoEscondido = progressoSaidaConteudo >= 1;
+
+                gsap.set(capaBarra, {
+                    opacity: 1 - progressoSaidaConteudo,
+                    pointerEvents: conteudoEscondido ? "none" : "auto",
+                });
             }
 
             if (capaSeta) {

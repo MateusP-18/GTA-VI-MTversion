@@ -52,20 +52,61 @@ body{
     filter: brightness(0.7);
 }
 
-/* Em telas estreitas e altas (celular/tablet), "cover" sobre um vídeo
-   16:9 corta quase tudo dos lados — só sobrava o Jason no centro. Aqui o
-   vídeo passa a mostrar o quadro inteiro (contain), e o espaço vazio
-   acima/abaixo dele ganha um fundo desfocado do próprio vídeo, para não
-   parecer uma barra preta. Desktop não é afetado. */
+/* Em telas estreitas e altas (celular/tablet), o vídeo passa a aparecer
+   dentro de um quadro quase quadrado, centralizado, com folga ao redor —
+   em vez de ocupar a tela inteira. O fundo continua sendo o mesmo fundo
+   escuro do corpo da página (nenhuma imagem auxiliar atrás). Desktop não
+   é afetado: continua com o vídeo cobrindo o .capa-painel inteiro. */
 @media (max-width: 900px){
+    .capa-video{
+        top: 50%;
+        left: 50%;
+        width: min(90vw, 80vh);
+        height: min(90vw, 80vh);
+        aspect-ratio: 1 / 1;
+        transform: translate(-50%, -50%);
+        object-fit: cover;
+        object-position: center;
+        border-radius: 18px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+    }
+}
+
+/* Celular na horizontal: a capa usava as mesmas medidas do retrato e
+   ficava gigante/cortada numa tela bem mais baixa que larga. Aqui só
+   encolhe o logo e a barra inferior; o vídeo (regra acima) já se ajusta
+   sozinho por usar min(90vw, 80vh). Não afeta desktop widescreen, pois
+   fica dentro do mesmo max-width: 900px do breakpoint mobile. */
+@media (max-width: 900px) and (orientation: landscape){
     .capa-painel{
-        background-image: url('../assets/capa-fundo-mobile.jpg');
-        background-size: cover;
-        background-position: center;
+        padding-top: 12px;
     }
 
-    .capa-video{
-        object-fit: contain;
+    .capa-moldura{
+        width: 42vh;
+        max-width: 380px;
+    }
+
+    .capa-barra{
+        padding: 10px 0;
+    }
+
+    .capa-barra-conteudo{
+        gap: 16px;
+    }
+
+    .capa-rotulo{
+        font-size: 11px;
+        margin-bottom: 4px;
+    }
+
+    .capa-data{
+        font-size: 16px;
+    }
+
+    .capa-barra .botao{
+        padding: 8px 22px;
+        font-size: 13px;
     }
 }
 
