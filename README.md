@@ -81,6 +81,7 @@ szpc-clone-gta/
 
 ### Galeria
 - No celular, o fundo desfocado com a primeira imagem da galeria agora tem uma garantia via CSS (além da lógica já existente em JS), para nunca aparecer vazio antes de qualquer toque do usuário.
+- **Atualização final:** a grade estática de imagens foi substituída por um carrossel estilo **Coverflow** (implementado em HTML/CSS/JS puro com GSAP, sem React/Next.js): imagem central em destaque, laterais em perspectiva 3D (rotação + escala + profundidade), navegação por setas, teclado (setas do teclado) e swipe no celular, com loop infinito (não duplica elementos — usa distância circular entre os 6 índices). O fundo borrado da seção (`--galeria-imagem` / `.galeria-ativa`) continua exatamente com a mesma mecânica de antes, agora alimentado pelo item central do carrossel, com um fade suave na troca. Clicar numa imagem lateral centraliza ela; clicar na imagem já central abre a visualização ampliada (lightbox, preservado sem alterações na sua própria lógica de abrir/fechar). Mesmas imagens e textos/alt de antes — nenhum asset novo.
 
 ### Rodapé
 - Adicionada a linha "Desenvolvido por **@MT Designs**", com o nome linkando para o perfil do Instagram (`instagram.com/mateusp_18`).

@@ -1289,7 +1289,7 @@ main{
 }
 
 .secao-galeria .conteudo-central,
-.galeria-grade{
+.galeria-coverflow{
     position: relative;
     z-index: 1;
 }
@@ -1298,53 +1298,76 @@ main{
     color: var(--cor-texto-suave);
 }
 
-.galeria-grade{
-    max-width: 1200px;
-    margin: 56px auto 0;
-    padding: 0 32px;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(2, 180px);
-    gap: 14px;
+.galeria-coverflow{
+    max-width: 1040px;
+    margin: 64px auto 0;
+    padding: 0 64px;
 }
 
-.galeria-item{
+.galeria-coverflow-pista{
     position: relative;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    border-radius: 10px;
-    overflow: hidden;
-    transition: transform 0.35s ease, z-index 0s;
+    height: 380px;
+    perspective: 1600px;
 }
 
-.galeria-item-imagem{
+.galeria-slide{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 300px;
+    height: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    will-change: transform, opacity;
+}
+
+.galeria-slide-imagem{
     position: absolute;
     inset: 0;
-    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease, filter 0.5s ease;
-    filter: saturate(0.85) brightness(0.85);
+    display: block;
+    filter: saturate(0.9) brightness(0.8);
+    transition: filter 0.4s ease;
 }
 
-.galeria-item-1{ grid-column: span 2; grid-row: span 2; transform: rotate(-1deg); }
-.galeria-item-2{ grid-column: span 2; grid-row: span 1; transform: rotate(1deg); }
-.galeria-item-3{ grid-column: span 2; grid-row: span 1; transform: rotate(-0.6deg); }
-.galeria-item-4{ grid-column: span 2; grid-row: span 1; transform: rotate(0.8deg); }
-.galeria-item-5{ grid-column: span 1; grid-row: span 1; transform: rotate(-1.2deg); }
-.galeria-item-6{ grid-column: span 1; grid-row: span 1; transform: rotate(1.4deg); }
-
-.galeria-item:hover{
-    transform: scale(1.04) rotate(0deg) !important;
-    z-index: 2;
+.galeria-slide[data-atual="true"]{
+    box-shadow: 0 24px 60px rgba(0,0,0,0.55);
 }
 
-.galeria-item:hover .galeria-item-imagem{
-    transform: scale(1.1);
-    filter: saturate(1) brightness(1);
+.galeria-slide[data-atual="true"] .galeria-slide-imagem{
+    filter: saturate(1.05) brightness(1);
 }
+
+.galeria-seta{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.25);
+    background-color: rgba(13,13,26,0.55);
+    color: var(--cor-texto);
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 150;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.galeria-seta:hover{
+    background-color: var(--cor-magenta);
+    border-color: var(--cor-magenta);
+}
+
+.galeria-seta-anterior{ left: 0; }
+.galeria-seta-proxima{ right: 0; }
 
 @media (max-width: 800px){
     .secao-galeria{
@@ -1353,24 +1376,32 @@ main{
 
     /* No touch não existe hover, então o fundo já entra visível com a
        primeira imagem da galeria (o JS ainda atualiza dinamicamente
-       conforme o dedo passa por cima de cada miniatura). É só uma
-       garantia via CSS puro — não depende do JS ter rodado a tempo. */
+       conforme o item central do coverflow muda). É só uma garantia via
+       CSS puro — não depende do JS ter rodado a tempo. */
     .galeria-fundo{
         opacity: 0.85;
         transform: scale(1.12);
         background-image: var(--galeria-imagem, url('../assets/galeria-01.jpg'));
     }
 
-    .galeria-grade{
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(6, 160px);
+    .galeria-coverflow{
+        padding: 0 6px;
+        margin-top: 40px;
     }
 
-    .galeria-item-1, .galeria-item-2, .galeria-item-3,
-    .galeria-item-4, .galeria-item-5, .galeria-item-6{
-        grid-column: span 1;
-        grid-row: span 1;
-        transform: none;
+    .galeria-coverflow-pista{
+        height: 270px;
+        perspective: 900px;
+    }
+
+    .galeria-slide{
+        width: 210px;
+    }
+
+    .galeria-seta{
+        width: 36px;
+        height: 36px;
+        font-size: 13px;
     }
 }
 

@@ -460,132 +460,239 @@ if (window.gsap && window.ScrollTrigger && video && capa && capaPainel && capaCo
     });
 })();
 
-// 7. LIGHTBOX DA GALERIA
+// 7. GALERIA — COVERFLOW + FUNDO DINÂMICO + LIGHTBOX
 (function () {
-    const lightbox = document.getElementById("galeria-lightbox");
-    const imagem = document.getElementById("galeria-lightbox-imagem");
-    const legenda = document.getElementById("galeria-lightbox-legenda");
-    const fechar = document.getElementById("galeria-lightbox-fechar");
-    const itens = document.querySelectorAll(".galeria-item");
+    const secaoGaleria = document.getElementById("galeria");
+    const fundoGaleria = document.getElementById("galeria-fundo");
+    const pista = document.getElementById("galeria-coverflow-pista");
+    const slides = Array.from(document.querySelectorAll(".galeria-slide"));
+    const botaoAnterior = document.getElementById("galeria-anterior");
+    const botaoProxima = document.getElementById("galeria-proxima");
 
-    if (!lightbox || !imagem || !legenda || !itens.length) {
+    const lightbox = document.getElementById("galeria-lightbox");
+    const lightboxImagem = document.getElementById("galeria-lightbox-imagem");
+    const lightboxLegenda = document.getElementById("galeria-lightbox-legenda");
+    const lightboxFechar = document.getElementById("galeria-lightbox-fechar");
+
+    if (!secaoGaleria || !pista || !slides.length) {
         return;
     }
 
-    const fecharLightbox = function () {
-        lightbox.classList.remove("aberto");
-    };
+    const total = slides.length;
+    let atual = 0;
 
-    itens.forEach(function (item) {
-        item.addEventListener("click", function () {
-            const src = item.getAttribute("data-imagem");
-            const texto = item.getAttribute("data-legenda") || "";
-
-            legenda.textContent = texto;
-            imagem.src = src || "";
-            imagem.alt = texto;
-            lightbox.classList.add("aberto");
-        });
-    });
-
-    if (fechar) {
-        fechar.addEventListener("click", fecharLightbox);
-    }
-
-    lightbox.addEventListener("click", function (evento) {
-        if (evento.target === lightbox) {
-            fecharLightbox();
-        }
-    });
-
-    document.addEventListener("keydown", function (evento) {
-        if (evento.key === "Escape" && lightbox.classList.contains("aberto")) {
-            fecharLightbox();
-        }
-    });
-
-    // Fundo da seção reagindo à imagem em destaque.
-    // Mouse: hover (sempre ligado, não atrapalha em quem não tem mouse).
-    // Toque (celular/tablet): já entra com a primeira imagem e atualiza
-    // conforme o dedo desliza sobre as miniaturas.
-    const secaoGaleria = document.getElementById("galeria");
-    const gradeGaleria = document.querySelector(".galeria-grade");
-
-    // Detecção direta de suporte a toque (mais confiável do que depender
-    // só de uma media query: alguns navegadores/dispositivos relatam
-    // hover/pointer de forma inconsistente e faziam essa função inteira
-    // ficar desligada sem nenhum aviso).
-    const suportaToque =
-        "ontouchstart" in window ||
-        (navigator.maxTouchPoints && navigator.maxTouchPoints > 0);
-
-    const mostrarFundoDaImagem = function (src) {
-        if (!secaoGaleria || !src) {
+    // ---------- fundo dinâmico: mesma mecânica de sempre (--galeria-imagem
+    // + .galeria-ativa em .secao-galeria) — agora alimentada pelo item
+    // central do coverflow, com um fade suave quando ele muda. ----------
+    const aplicarImagemDeFundo = function (src) {
+        if (!src) {
             return;
         }
 
-        // IMPORTANTE: url() dentro de uma custom property é resolvida
-        // relativa ao arquivo CSS que consome o var() (css/style.css),
-        // não ao index.html. Por isso o caminho relativo "assets/..."
-        // quebrava (o navegador procurava em css/assets/...).
-        // Resolvendo para uma URL absoluta aqui, o caminho funciona
-        // não importa onde a variável é usada.
+        // url() numa custom property é resolvida relativa ao CSS que
+        // consome o var(), não ao HTML — por isso resolvemos pra
+        // absoluta aqui, senão o caminho "assets/..." quebra.
         const urlAbsoluta = new URL(src, document.baseURI).href;
 
-        secaoGaleria.style.setProperty(
-            "--galeria-imagem",
-            "url('" + urlAbsoluta + "')"
-        );
+        secaoGaleria.style.setProperty("--galeria-imagem", "url('" + urlAbsoluta + "')");
         secaoGaleria.classList.add("galeria-ativa");
     };
 
-    if (secaoGaleria) {
-        // Mouse: sempre ativo. Em telas de toque isso simplesmente nunca
-        // dispara sozinho, então não atrapalha em nada.
-        const limparFundo = function () {
-            secaoGaleria.classList.remove("galeria-ativa");
-        };
+    const atualizarFundo = function (src, comTransicao) {
+        if (!fundoGaleria || !window.gsap || !comTransicao) {
+            aplicarImagemDeFundo(src);
+            return;
+        }
 
-        itens.forEach(function (item) {
-            item.addEventListener("mouseenter", function () {
-                mostrarFundoDaImagem(item.getAttribute("data-imagem"));
-            });
-
-            item.addEventListener("mouseleave", limparFundo);
+        gsap.to(fundoGaleria, {
+            opacity: 0,
+            duration: 0.25,
+            ease: "power1.out",
+            overwrite: "auto",
+            onComplete: function () {
+                aplicarImagemDeFundo(src);
+                gsap.to(fundoGaleria, { opacity: 0.85, duration: 0.45, ease: "power1.out" });
+            },
         });
+    };
 
-        secaoGaleria.addEventListener("mouseleave", limparFundo);
+    // ---------- coverflow: distância circular pro loop infinito, sem
+    // duplicar nenhum elemento (são sempre as mesmas 6 imagens). ----------
+    const distanciaCircular = function (indice) {
+        let d = indice - atual;
+        if (d > total / 2) d -= total;
+        if (d < -total / 2) d += total;
+        return d;
+    };
+
+    const espacamentoAtual = function () {
+        return window.innerWidth <= 800 ? 118 : 190;
+    };
+
+    const renderizar = function (instantaneo) {
+        const espacamento = espacamentoAtual();
+
+        slides.forEach(function (slide, indice) {
+            const distancia = distanciaCircular(indice);
+            const absoluta = Math.abs(distancia);
+            const oculto = absoluta > 2;
+
+            slide.setAttribute("data-atual", indice === atual ? "true" : "false");
+            slide.style.pointerEvents = oculto ? "none" : "auto";
+            slide.setAttribute("tabindex", oculto ? "-1" : "0");
+
+            if (!window.gsap) {
+                return;
+            }
+
+            gsap.to(slide, {
+                xPercent: -50,
+                x: distancia * espacamento,
+                z: -absoluta * 140,
+                rotateY: distancia * -26,
+                scale: absoluta === 0 ? 1 : Math.max(0.6, 1 - absoluta * 0.17),
+                opacity: oculto ? 0 : (absoluta === 0 ? 1 : 1 - absoluta * 0.32),
+                zIndex: 100 - absoluta,
+                duration: instantaneo ? 0 : 0.6,
+                ease: "power3.out",
+                overwrite: "auto",
+            });
+        });
+    };
+
+    const abrirLightbox = function (slide) {
+        if (!lightbox || !lightboxImagem || !lightboxLegenda) {
+            return;
+        }
+
+        const src = slide.getAttribute("data-imagem");
+        const texto = slide.getAttribute("data-legenda") || "";
+
+        lightboxLegenda.textContent = texto;
+        lightboxImagem.src = src || "";
+        lightboxImagem.alt = texto;
+        lightbox.classList.add("aberto");
+    };
+
+    const fecharLightbox = function () {
+        if (lightbox) {
+            lightbox.classList.remove("aberto");
+        }
+    };
+
+    const irPara = function (indice) {
+        atual = ((indice % total) + total) % total;
+        renderizar(false);
+        atualizarFundo(slides[atual].getAttribute("data-imagem"), true);
+    };
+
+    const proximo = function () {
+        irPara(atual + 1);
+    };
+
+    const anterior = function () {
+        irPara(atual - 1);
+    };
+
+    // clique numa lateral: centraliza ela. clique na já-central: amplia.
+    slides.forEach(function (slide, indice) {
+        slide.addEventListener("click", function () {
+            if (indice === atual) {
+                abrirLightbox(slide);
+            } else {
+                irPara(indice);
+            }
+        });
+    });
+
+    if (botaoAnterior) {
+        botaoAnterior.addEventListener("click", anterior);
     }
 
-    if (secaoGaleria && gradeGaleria && itens.length && suportaToque) {
-        // Toque: sem hover, então o fundo começa já com a primeira imagem
-        // (nunca fica "sem nada") e troca conforme o dedo passa por cima
-        // de cada miniatura — sem interferir no toque que abre o lightbox.
-        let itemAtual = itens[0];
-        mostrarFundoDaImagem(itemAtual.getAttribute("data-imagem"));
-
-        const atualizarPeloToque = function (toque) {
-            const alvo = document.elementFromPoint(toque.clientX, toque.clientY);
-            const item = alvo ? alvo.closest(".galeria-item") : null;
-
-            if (item && item !== itemAtual) {
-                itemAtual = item;
-                mostrarFundoDaImagem(item.getAttribute("data-imagem"));
-            }
-        };
-
-        gradeGaleria.addEventListener("touchstart", function (evento) {
-            if (evento.touches[0]) {
-                atualizarPeloToque(evento.touches[0]);
-            }
-        }, { passive: true });
-
-        gradeGaleria.addEventListener("touchmove", function (evento) {
-            if (evento.touches[0]) {
-                atualizarPeloToque(evento.touches[0]);
-            }
-        }, { passive: true });
+    if (botaoProxima) {
+        botaoProxima.addEventListener("click", proximo);
     }
+
+    pista.addEventListener("keydown", function (evento) {
+        if (evento.key === "ArrowRight") {
+            evento.preventDefault();
+            proximo();
+        } else if (evento.key === "ArrowLeft") {
+            evento.preventDefault();
+            anterior();
+        }
+    });
+
+    // swipe: só mede início/fim do toque (sem touchmove, sem
+    // preventDefault) — não interfere em nada no scroll vertical da página.
+    let toqueInicioX = null;
+    let toqueInicioY = null;
+
+    pista.addEventListener("touchstart", function (evento) {
+        const toque = evento.touches[0];
+        if (!toque) {
+            return;
+        }
+        toqueInicioX = toque.clientX;
+        toqueInicioY = toque.clientY;
+    }, { passive: true });
+
+    pista.addEventListener("touchend", function (evento) {
+        if (toqueInicioX === null) {
+            return;
+        }
+
+        const toque = evento.changedTouches[0];
+        if (!toque) {
+            toqueInicioX = null;
+            toqueInicioY = null;
+            return;
+        }
+
+        const deltaX = toque.clientX - toqueInicioX;
+        const deltaY = toque.clientY - toqueInicioY;
+        toqueInicioX = null;
+        toqueInicioY = null;
+
+        if (Math.abs(deltaX) > 40 && Math.abs(deltaX) > Math.abs(deltaY) * 1.5) {
+            if (deltaX < 0) {
+                proximo();
+            } else {
+                anterior();
+            }
+        }
+    }, { passive: true });
+
+    let redimensionarTimeout;
+    window.addEventListener("resize", function () {
+        clearTimeout(redimensionarTimeout);
+        redimensionarTimeout = setTimeout(function () {
+            renderizar(true);
+        }, 150);
+    });
+
+    if (lightboxFechar) {
+        lightboxFechar.addEventListener("click", fecharLightbox);
+    }
+
+    if (lightbox) {
+        lightbox.addEventListener("click", function (evento) {
+            if (evento.target === lightbox) {
+                fecharLightbox();
+            }
+        });
+    }
+
+    document.addEventListener("keydown", function (evento) {
+        if (evento.key === "Escape" && lightbox && lightbox.classList.contains("aberto")) {
+            fecharLightbox();
+        }
+    });
+
+    // estado inicial: primeira imagem já centralizada e já é o fundo, sem
+    // transição (é o carregamento da página, não uma troca).
+    renderizar(true);
+    atualizarFundo(slides[0].getAttribute("data-imagem"), false);
 })();
 
 // 8. THE SOUND OF VICE CITY — player real das faixas do álbum

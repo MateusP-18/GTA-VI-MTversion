@@ -460,84 +460,104 @@
           <p class="galeria-texto">Imagens que contam histórias.</p>
         </div>
 
-        <div class="galeria-grade aparecer">
+        <div class="galeria-coverflow aparecer" id="galeria-coverflow">
           <button
-            class="galeria-item galeria-item-1"
-            data-legenda="Oficina à beira da estrada em Vice City"
-            data-imagem="assets/galeria-01.jpg"
+            type="button"
+            class="galeria-seta galeria-seta-anterior"
+            id="galeria-anterior"
+            aria-label="Imagem anterior da galeria"
           >
-            <img
-              class="galeria-item-imagem"
-              src="assets/galeria-01.jpg"
-              alt="Oficina à beira da estrada, com Vice City ao fundo ao entardecer"
-              loading="lazy"
-              decoding="async"
-            />
+            &#10094;
           </button>
+
+          <div class="galeria-coverflow-pista" id="galeria-coverflow-pista">
+            <button
+              class="galeria-slide"
+              data-legenda="Oficina à beira da estrada em Vice City"
+              data-imagem="assets/galeria-01.jpg"
+            >
+              <img
+                class="galeria-slide-imagem"
+                src="assets/galeria-01.jpg"
+                alt="Oficina à beira da estrada, com Vice City ao fundo ao entardecer"
+                loading="lazy"
+                decoding="async"
+              />
+            </button>
+            <button
+              class="galeria-slide"
+              data-legenda="Fuga pelas águas de Vice City"
+              data-imagem="assets/galeria-02.jpg"
+            >
+              <img
+                class="galeria-slide-imagem"
+                src="assets/galeria-02.jpg"
+                alt="Barco em fuga da polícia nas águas de Vice City"
+                loading="lazy"
+                decoding="async"
+              />
+            </button>
+            <button
+              class="galeria-slide"
+              data-legenda="Salto sobre a costa de Leonida"
+              data-imagem="assets/galeria-03.jpg"
+            >
+              <img
+                class="galeria-slide-imagem"
+                src="assets/galeria-03.jpg"
+                alt="Salto de paraquedas sobre a costa de Leonida"
+                loading="lazy"
+                decoding="async"
+              />
+            </button>
+            <button
+              class="galeria-slide"
+              data-legenda="Vida noturna em Vice City"
+              data-imagem="assets/galeria-04.jpg"
+            >
+              <img
+                class="galeria-slide-imagem"
+                src="assets/galeria-04.jpg"
+                alt="Vida noturna em uma boate de Vice City"
+                loading="lazy"
+                decoding="async"
+              />
+            </button>
+            <button
+              class="galeria-slide"
+              data-legenda="Vice City vista do alto, à noite"
+              data-imagem="assets/galeria-05.jpg"
+            >
+              <img
+                class="galeria-slide-imagem"
+                src="assets/galeria-05.jpg"
+                alt="Vista noturna de Vice City com roda-gigante ao fundo"
+                loading="lazy"
+                decoding="async"
+              />
+            </button>
+            <button
+              class="galeria-slide"
+              data-legenda="Perseguição nas estradas de Leonida"
+              data-imagem="assets/galeria-06.jpg"
+            >
+              <img
+                class="galeria-slide-imagem"
+                src="assets/galeria-06.jpg"
+                alt="Perseguição policial em uma estrada de Leonida"
+                loading="lazy"
+                decoding="async"
+              />
+            </button>
+          </div>
+
           <button
-            class="galeria-item galeria-item-2"
-            data-legenda="Fuga pelas águas de Vice City"
-            data-imagem="assets/galeria-02.jpg"
+            type="button"
+            class="galeria-seta galeria-seta-proxima"
+            id="galeria-proxima"
+            aria-label="Próxima imagem da galeria"
           >
-            <img
-              class="galeria-item-imagem"
-              src="assets/galeria-02.jpg"
-              alt="Barco em fuga da polícia nas águas de Vice City"
-              loading="lazy"
-              decoding="async"
-            />
-          </button>
-          <button
-            class="galeria-item galeria-item-3"
-            data-legenda="Salto sobre a costa de Leonida"
-            data-imagem="assets/galeria-03.jpg"
-          >
-            <img
-              class="galeria-item-imagem"
-              src="assets/galeria-03.jpg"
-              alt="Salto de paraquedas sobre a costa de Leonida"
-              loading="lazy"
-              decoding="async"
-            />
-          </button>
-          <button
-            class="galeria-item galeria-item-4"
-            data-legenda="Vida noturna em Vice City"
-            data-imagem="assets/galeria-04.jpg"
-          >
-            <img
-              class="galeria-item-imagem"
-              src="assets/galeria-04.jpg"
-              alt="Vida noturna em uma boate de Vice City"
-              loading="lazy"
-              decoding="async"
-            />
-          </button>
-          <button
-            class="galeria-item galeria-item-5"
-            data-legenda="Vice City vista do alto, à noite"
-            data-imagem="assets/galeria-05.jpg"
-          >
-            <img
-              class="galeria-item-imagem"
-              src="assets/galeria-05.jpg"
-              alt="Vista noturna de Vice City com roda-gigante ao fundo"
-              loading="lazy"
-              decoding="async"
-            />
-          </button>
-          <button
-            class="galeria-item galeria-item-6"
-            data-legenda="Perseguição nas estradas de Leonida"
-            data-imagem="assets/galeria-06.jpg"
-          >
-            <img
-              class="galeria-item-imagem"
-              src="assets/galeria-06.jpg"
-              alt="Perseguição policial em uma estrada de Leonida"
-              loading="lazy"
-              decoding="async"
-            />
+            &#10095;
           </button>
         </div>
       </section>
